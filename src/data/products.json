@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Plátano Maduro por Kg",
+    "priceUsd": 1.50,
+    "pricePrimeUsd": 1.20,
+    "category": "Víveres",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 2,
+    "name": "Leche Completa 1L",
+    "priceUsd": 2.10,
+    "pricePrimeUsd": 1.85,
+    "category": "Lácteos",
+    "image": "https://via.placeholder.com/150"
+  }
+]
