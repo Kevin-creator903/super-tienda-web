@@ -1,14 +1,17 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
-import { FilterSidebar } from './components/FilterSidebar';
-import { CategoryAccordion } from './components/CategoryAccordion';
 import { CustomerSupportChat } from './components/CustomerSupportChat';
 import { CartDrawer } from './components/CartDrawer';
 import { ToastNotification } from './components/ToastNotification';
 import { ProductDetailView } from './components/ProductDetailView';
+import { PromoBannerSlider } from './components/PromoBannerSlider';
+import { OffersSection } from './components/OffersSection';
+import { SupermarketGrid } from './components/SupermarketGrid';
+import { CategoryDrawer } from './components/CategoryDrawer';
+import { FilterDrawer } from './components/FilterDrawer';
 import { useStore } from './store/useStore';
-import { PRODUCTS } from './data/mockData';
+import * as mockData from './data/mockData';
 import { MessageCircle, ShoppingBag, RotateCcw } from 'lucide-react';
 
 export default function App() {
@@ -26,7 +29,8 @@ export default function App() {
     resetFilters
   } = useStore();
 
-  const productList = Array.isArray(PRODUCTS) ? PRODUCTS : [];
+  const productList = Array.isArray(mockData.PRODUCTS) ? mockData.PRODUCTS : [];
+  const isDefaultView = selectedCategory === 'Todos los productos' && !selectedSubcategory && !searchQuery;
 
   // Lógica de Filtrado y Ordenamiento
   const filteredProducts = React.useMemo(() => {
@@ -62,70 +66,64 @@ export default function App() {
 
       <ToastNotification />
       <CartDrawer />
+      <CategoryDrawer />
+      <FilterDrawer />
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-6">
         
         {selectedProduct ? (
           <ProductDetailView />
         ) : (
           <>
-            <div className="relative w-full h-44 md:h-56 rounded-3xl overflow-hidden mb-8 shadow-md bg-gradient-to-r from-emerald-900 via-emerald-700 to-teal-700 flex items-center justify-between px-8 md:px-12 text-white border border-emerald-600/30">
-              <div className="max-w-lg z-10 space-y-2">
-                <span className="bg-amber-400 text-emerald-950 font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full inline-block shadow-sm">
-                  Calidad Garantizada
-                </span>
-                <h1 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
-                  CUANDO SON PERFECTOS NO TIENES QUE ESCOGERLOS
-                </h1>
-              </div>
-            </div>
+            {/* 1. Banners Promocionales Superior */}
+            {isDefaultView && <PromoBannerSlider />}
 
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* 2. Ofertas de la Semana */}
+            {isDefaultView && <OffersSection />}
+
+            {/* 3. Grilla de Categorías "Supermercado" */}
+            {isDefaultView && <SupermarketGrid />}
+
+            {/* 4. Catálogo de Productos a Ancho Completo (Hasta 6 columnas) */}
+            <div id="catalog-section" className="w-full space-y-6 pt-2">
               
-              <div className="w-full lg:w-64 space-y-6 flex-shrink-0">
-                <CategoryAccordion />
-                <FilterSidebar />
-              </div>
-
-              <div className="flex-1 w-full">
-                <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-emerald-100 shadow-sm mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <nav className="text-xs text-emerald-700 font-semibold mb-1">
-                      Inicio &gt; {selectedCategory} {selectedSubcategory && `> ${selectedSubcategory}`}
-                    </nav>
-                    <h2 className="text-xl font-black text-gray-900">
-                      {selectedSubcategory || selectedCategory}
-                    </h2>
-                  </div>
-                  <span className="text-xs font-bold text-gray-500 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full w-max">
-                    {filteredProducts.length} Productos encontrados
-                  </span>
+              <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <nav className="text-xs text-emerald-700 font-semibold mb-0.5">
+                    Inicio &gt; {selectedCategory} {selectedSubcategory && `> ${selectedSubcategory}`}
+                  </nav>
+                  <h2 className="text-xl font-black text-gray-900">
+                    {selectedSubcategory || selectedCategory}
+                  </h2>
                 </div>
-
-                {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {filteredProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-16 bg-white/90 backdrop-blur-md rounded-2xl border border-dashed border-emerald-200 p-8 shadow-sm space-y-3">
-                    <div className="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto">
-                      <ShoppingBag className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-base font-bold text-gray-800">No hay productos que coincidan</h3>
-                    <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                      Intenta ajustar el rango de precios o limpiar los filtros activos.
-                    </p>
-                    <button
-                      onClick={resetFilters}
-                      className="mt-2 inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" /> Restablecer Filtros
-                    </button>
-                  </div>
-                )}
+                <span className="text-xs font-bold text-gray-500 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full w-max">
+                  {filteredProducts.length} Productos encontrados
+                </span>
               </div>
+
+              {filteredProducts.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  {filteredProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16 bg-white/90 backdrop-blur-md rounded-2xl border border-dashed border-emerald-200 p-8 shadow-sm space-y-3">
+                  <div className="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto">
+                    <ShoppingBag className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-800">No hay productos que coincidan</h3>
+                  <p className="text-xs text-gray-500 max-w-sm mx-auto">
+                    Intenta ajustar los filtros o limpiar la búsqueda activa.
+                  </p>
+                  <button
+                    onClick={resetFilters}
+                    className="mt-2 inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" /> Restablecer Filtros
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}

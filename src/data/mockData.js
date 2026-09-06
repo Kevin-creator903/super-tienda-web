@@ -1,40 +1,323 @@
-// Arbol jerárquico para el acordeón de categorías
+// Arbol jerárquico completo para el acordeón de categorías
+// Arbol jerárquico completo para el acordeón de categorías (28 Categorías)
 export const CATEGORY_TREE = [
   {
-    id: 'cat-1',
+    id: 'cat-alimentos',
     name: 'Alimentos',
     subcategories: [
-      { id: 'sub-1-1', name: 'Granos y Cereales' },
-      { id: 'sub-1-2', name: 'Pastas y Harinas' },
-      { id: 'sub-1-3', name: 'Aceites y Enlatados' },
-      { id: 'sub-1-4', name: 'Salsas y Condimentos' }
+      { id: 'sub-alim-1', name: 'Lácteos y Huevos' },
+      { id: 'sub-alim-2', name: 'Harinas y Cereales' },
+      { id: 'sub-alim-3', name: 'Pasta y Granos' },
+      { id: 'sub-alim-4', name: 'Salsas' },
+      { id: 'sub-alim-5', name: 'Aceites, Vinagres y Condimentos' },
+      { id: 'sub-alim-6', name: 'Azúcar, Reposteria y Mezclas' },
+      { id: 'sub-alim-7', name: 'Chocolates y Dulces' },
+      { id: 'sub-alim-8', name: 'Enlatados y Envasados' },
+      { id: 'sub-alim-9', name: 'Galletas y Ponques' },
+      { id: 'sub-alim-10', name: 'Snacks' },
+      { id: 'sub-alim-11', name: 'Café e Infusiones' },
+      { id: 'sub-alim-12', name: 'Caldos y Sopas' },
+      { id: 'sub-alim-13', name: 'Sabores del Mundo' }
     ]
   },
   {
-    id: 'cat-2',
+    id: 'cat-frutas-verduras',
     name: 'Frutas y Verduras',
     subcategories: [
-      { id: 'sub-2-1', name: 'Frutas Frescas' },
-      { id: 'sub-2-2', name: 'Verduras y Hortalizas' },
-      { id: 'sub-2-3', name: 'Tubérculos' }
+      { id: 'sub-fv-1', name: 'Frutas' },
+      { id: 'sub-fv-2', name: 'Vegetales y Verduras' },
+      { id: 'sub-fv-3', name: 'Colonia Tovar' }
     ]
   },
   {
-    id: 'cat-3',
-    name: 'Bebidas y Lácteos',
+    id: 'cat-carniceria',
+    name: 'Carnicería y Pescadería',
     subcategories: [
-      { id: 'sub-3-1', name: 'Lácteos y Quesos' },
-      { id: 'sub-3-2', name: 'Jugos y Refrescos' },
-      { id: 'sub-3-3', name: 'Café y Achocolatados' }
+      { id: 'sub-carn-1', name: 'Res' },
+      { id: 'sub-carn-2', name: 'Pollo' },
+      { id: 'sub-carn-3', name: 'Pescados y Mariscos' },
+      { id: 'sub-carn-4', name: 'Cerdo' },
+      { id: 'sub-carn-5', name: 'Parrillera' },
+      { id: 'sub-carn-6', name: 'Cordero y Otros' }
     ]
   },
   {
-    id: 'cat-4',
-    name: 'Cuidado Personal y Limpieza',
+    id: 'cat-panaderia',
+    name: 'Panadería, Pasteleria y Charcutería',
     subcategories: [
-      { id: 'sub-4-1', name: 'Higiene Personal' },
-      { id: 'sub-4-2', name: 'Limpieza del Hogar' },
-      { id: 'sub-4-3', name: 'Cuidado del Cabello' }
+      { id: 'sub-pan-1', name: 'Quesos' },
+      { id: 'sub-pan-2', name: 'Jamón y Tocinetas' },
+      { id: 'sub-pan-3', name: 'Salchichas y Chorizos' },
+      { id: 'sub-pan-4', name: 'Panes' },
+      { id: 'sub-pan-5', name: 'Pastelería' },
+      { id: 'sub-pan-6', name: 'Coffee Market' },
+      { id: 'sub-pan-7', name: 'Tu Zona Market Bakery' }
+    ]
+  },
+  {
+    id: 'cat-farmacia',
+    name: 'Farmacia',
+    subcategories: [
+      { id: 'sub-farm-1', name: 'Malestar General, Gripe y Tos' },
+      { id: 'sub-farm-2', name: 'Dolor General Y Relajantes' },
+      { id: 'sub-farm-3', name: 'Cuidados Digestivos' },
+      { id: 'sub-farm-4', name: 'Materiales Médicos y Quirúrgicos' },
+      { id: 'sub-farm-5', name: 'Dermatologicos y Cuidados Intimos' },
+      { id: 'sub-farm-6', name: 'Medicamentos' },
+      { id: 'sub-farm-7', name: 'Psicotrópicos' },
+      { id: 'sub-farm-8', name: 'Estimulantes' },
+      { id: 'sub-farm-9', name: 'Cuidado de la Vista y Lentes' }
+    ]
+  },
+  {
+    id: 'cat-limpieza',
+    name: 'Limpieza y Hogar',
+    subcategories: [
+      { id: 'sub-limp-1', name: 'Desinfectantes y Multiusos' },
+      { id: 'sub-limp-2', name: 'Lavado de Ropa' },
+      { id: 'sub-limp-3', name: 'Papel' },
+      { id: 'sub-limp-4', name: 'Lavaplatos' },
+      { id: 'sub-limp-5', name: 'Utensilios para Limpieza' },
+      { id: 'sub-limp-6', name: 'Bolsas y Descartables' },
+      { id: 'sub-limp-7', name: 'Ambientadores e Insecticidas' },
+      { id: 'sub-limp-8', name: 'Campamento' }
+    ]
+  },
+  {
+    id: 'cat-licoreria',
+    name: 'Licoreria',
+    subcategories: [
+      { id: 'sub-lic-1', name: 'Cervezas' },
+      { id: 'sub-lic-2', name: 'Vinos y Espumantes' },
+      { id: 'sub-lic-3', name: 'Ron' },
+      { id: 'sub-lic-4', name: 'Whisky' },
+      { id: 'sub-lic-5', name: 'Destilados y Aperitivos' },
+      { id: 'sub-lic-6', name: 'Coolers y Accesorios' }
+    ]
+  },
+  {
+    id: 'cat-bebidas',
+    name: 'Bebidas',
+    subcategories: [
+      { id: 'sub-beb-1', name: 'Bebidas Gaseosas' },
+      { id: 'sub-beb-2', name: 'Jugos, Tés y Energizantes' },
+      { id: 'sub-beb-3', name: 'En Polvo' },
+      { id: 'sub-beb-4', name: 'Aguas' }
+    ]
+  },
+  {
+    id: 'cat-cuidado-personal',
+    name: 'Cuidado Personal',
+    subcategories: [
+      { id: 'sub-cp-1', name: 'Splash y Perfumes' },
+      { id: 'sub-cp-2', name: 'Cuidado del Cabello' },
+      { id: 'sub-cp-3', name: 'Cuidado Corporal' },
+      { id: 'sub-cp-4', name: 'Cuidado Facial' },
+      { id: 'sub-cp-5', name: 'Maquillaje' },
+      { id: 'sub-cp-6', name: 'Cuidado de Manos, Pies y Uñas' },
+      { id: 'sub-cp-7', name: 'Cuidado Intimo' },
+      { id: 'sub-cp-8', name: 'Higiene Bucal' },
+      { id: 'sub-cp-9', name: 'Afeitado y Depilación' }
+    ]
+  },
+  {
+    id: 'cat-recargas',
+    name: 'Recargas de Saldo Celular',
+    subcategories: [
+      { id: 'sub-rec-1', name: 'Recarga Saldo Movistar' }
+    ]
+  },
+  {
+    id: 'cat-congelados',
+    name: 'Congelados y Refrigerados',
+    subcategories: [
+      { id: 'sub-cong-1', name: 'Masas y Pasapalos' },
+      { id: 'sub-cong-2', name: 'Fruta y Verdura' },
+      { id: 'sub-cong-3', name: 'Listo para Servir' }
+    ]
+  },
+  {
+    id: 'cat-helados',
+    name: 'Helados y Postres',
+    subcategories: [
+      { id: 'sub-hel-1', name: 'Helados' },
+      { id: 'sub-hel-2', name: 'Postres' }
+    ]
+  },
+  {
+    id: 'cat-bebes',
+    name: 'Bebes',
+    subcategories: [
+      { id: 'sub-beb-1', name: 'Higiene' },
+      { id: 'sub-beb-2', name: 'Alimentación' },
+      { id: 'sub-beb-3', name: 'Accesorios Para Niños' }
+    ]
+  },
+  {
+    id: 'cat-cigarros',
+    name: 'Cigarros',
+    subcategories: [
+      { id: 'sub-cig-1', name: 'Cigarrillos' }
+    ]
+  },
+  {
+    id: 'cat-electronicos',
+    name: 'Electrónicos',
+    subcategories: [
+      { id: 'sub-elec-1', name: 'Electrodomésticos' },
+      { id: 'sub-elec-2', name: 'Cuidado y Belleza' },
+      { id: 'sub-elec-3', name: 'Celulares, Tablets y Routers' },
+      { id: 'sub-elec-4', name: 'Accesorios para Celulares' },
+      { id: 'sub-elec-5', name: 'Linea Blanca' }
+    ]
+  },
+  {
+    id: 'cat-mascotas',
+    name: 'Mascotas',
+    subcategories: [
+      { id: 'sub-masc-1', name: 'Alimento' },
+      { id: 'sub-masc-2', name: 'Cuidado y Accesorios' },
+      { id: 'sub-masc-3', name: 'Juguetes y Snacks' },
+      { id: 'sub-masc-4', name: 'Medicamentos para Mascotas' }
+    ]
+  },
+  {
+    id: 'cat-importado',
+    name: 'Importado',
+    subcategories: [
+      { id: 'sub-imp-1', name: 'Alimentos Importados' },
+      { id: 'sub-imp-2', name: 'Enlatados Importados' },
+      { id: 'sub-imp-3', name: 'Snacks Importados' },
+      { id: 'sub-imp-4', name: 'Bebidas Importadas' },
+      { id: 'sub-imp-5', name: 'Hogar y Limpieza Importados' },
+      { id: 'sub-imp-6', name: 'Utensilios Importados' },
+      { id: 'sub-imp-7', name: 'Ropa Importada' },
+      { id: 'sub-imp-8', name: 'Cuidado Personal Importado' },
+      { id: 'sub-imp-9', name: 'Belleza Importado' },
+      { id: 'sub-imp-10', name: 'Medicinas Importadas' },
+      { id: 'sub-imp-11', name: 'Empaques con detalle' },
+      { id: 'sub-imp-12', name: 'Mascotas Importados' },
+      { id: 'sub-imp-13', name: 'Vitaminas y Suplementos Importados' }
+    ]
+  },
+  {
+    id: 'cat-hogar',
+    name: 'Hogar',
+    subcategories: [
+      { id: 'sub-hog-1', name: 'Cocina y Baño' },
+      { id: 'sub-hog-2', name: 'Decoración' },
+      { id: 'sub-hog-3', name: 'Iluminación y Pilas' }
+    ]
+  },
+  {
+    id: 'cat-ferreteria',
+    name: 'Ferreteria',
+    subcategories: [
+      { id: 'sub-ferr-1', name: 'Construcción' },
+      { id: 'sub-ferr-2', name: 'Herramientas' },
+      { id: 'sub-ferr-3', name: 'Cerraduras y Seguridad' },
+      { id: 'sub-ferr-4', name: 'Plomeria' },
+      { id: 'sub-ferr-5', name: 'Electricidad' },
+      { id: 'sub-ferr-6', name: 'Pinturas' }
+    ]
+  },
+  {
+    id: 'cat-saludable',
+    name: 'Saludable',
+    subcategories: [
+      { id: 'sub-sal-1', name: 'Harinas y Pastas Saludable' },
+      { id: 'sub-sal-2', name: 'Aceites Saludables' },
+      { id: 'sub-sal-3', name: 'Bebidas Saludables' },
+      { id: 'sub-sal-4', name: 'Granos Saludables' },
+      { id: 'sub-sal-5', name: 'Snack y Frutos Secos' },
+      { id: 'sub-sal-6', name: 'Cereales y Granolas Saludables' },
+      { id: 'sub-sal-7', name: 'Enlatados Saludables' },
+      { id: 'sub-sal-8', name: 'Untables Saludables' },
+      { id: 'sub-sal-9', name: 'Listo para Servir Saludable' },
+      { id: 'sub-sal-10', name: 'Salsas y Condimentos Saludables' },
+      { id: 'sub-sal-11', name: 'Endulzantes' },
+      { id: 'sub-sal-12', name: 'Postres Saludables' }
+    ]
+  },
+  {
+    id: 'cat-papeleria',
+    name: 'Papelería',
+    subcategories: [
+      { id: 'sub-pap-1', name: 'Oficina' },
+      { id: 'sub-pap-2', name: 'Librería' }
+    ]
+  },
+  {
+    id: 'cat-jugueteria',
+    name: 'Juguetería y Fiesta',
+    subcategories: [
+      { id: 'sub-jug-1', name: 'Juguete' },
+      { id: 'sub-jug-2', name: 'Fiesta' }
+    ]
+  },
+  {
+    id: 'cat-automotriz',
+    name: 'Automotriz',
+    subcategories: [
+      { id: 'sub-auto-1', name: 'Lubricantes y Fluidos' },
+      { id: 'sub-auto-2', name: 'Baterias' },
+      { id: 'sub-auto-3', name: 'Repuestos y Cuidado' },
+      { id: 'sub-auto-4', name: 'Cauchos' }
+    ]
+  },
+  {
+    id: 'cat-deportes',
+    name: 'Deportes',
+    subcategories: [
+      { id: 'sub-dep-1', name: 'Implementos' },
+      { id: 'sub-dep-2', name: 'Accesorios' },
+      { id: 'sub-dep-3', name: 'Suplementos' }
+    ]
+  },
+  {
+    id: 'cat-ropa',
+    name: 'Ropa y Accesorios',
+    subcategories: [
+      { id: 'sub-rop-1', name: 'Calzados' },
+      { id: 'sub-rop-2', name: 'Top Caballero' },
+      { id: 'sub-rop-3', name: 'Bolsos y Accesorios' },
+      { id: 'sub-rop-4', name: 'Gorras y Sombreros' }
+    ]
+  },
+  {
+    id: 'cat-delicatessen',
+    name: 'Delicatessen',
+    subcategories: []
+  },
+  {
+    id: 'cat-navidad',
+    name: 'Navidad',
+    subcategories: [
+      { id: 'sub-nav-1', name: 'Navidad Articulos' },
+      { id: 'sub-nav-2', name: 'Sabores de Navidad' }
+    ]
+  },
+  {
+    id: 'cat-italiano',
+    name: 'Bodegón Italiano',
+    subcategories: [
+      { id: 'sub-ita-1', name: 'Salsas Italianas' },
+      { id: 'sub-ita-2', name: 'Aceites Italianos' },
+      { id: 'sub-ita-3', name: 'Condimentos Italianos' },
+      { id: 'sub-ita-4', name: 'Café e Infusiones Italianas' },
+      { id: 'sub-ita-5', name: 'Charcuteria Italiana' },
+      { id: 'sub-ita-6', name: 'Chocolates y Dulces Italianos' },
+      { id: 'sub-ita-7', name: 'Enlatados Italianos' },
+      { id: 'sub-ita-8', name: 'Galletas y Ponques Italianos' },
+      { id: 'sub-ita-9', name: 'Snacks Italianos' },
+      { id: 'sub-ita-10', name: 'Masas y Pasapalos Italianos' },
+      { id: 'sub-ita-11', name: 'Pasta y Arroz Italiano' },
+      { id: 'sub-ita-12', name: 'Licores y Bebidas Italianos' },
+      { id: 'sub-ita-13', name: 'Vinagres Italianos' },
+      { id: 'sub-ita-14', name: 'Harinas Italianas' },
+      { id: 'sub-ita-15', name: 'Mermeladas y Siropes Italianos' },
+      { id: 'sub-ita-16', name: 'Untables Italianos' },
+      { id: 'sub-ita-17', name: 'Pescaderia Italiana' }
     ]
   }
 ];
@@ -42,1067 +325,491 @@ export const CATEGORY_TREE = [
 // Lista simple de categorías para el Navbar
 export const CATEGORIES = [
   { id: 'all', name: 'Todos los productos' },
-  { id: 'c1', name: 'Alimentos' },
-  { id: 'c2', name: 'Frutas y Verduras' },
-  { id: 'c3', name: 'Bebidas y Lácteos' },
-  { id: 'c4', name: 'Cuidado Personal y Limpieza' }
+  ...CATEGORY_TREE.map((c) => ({ id: c.id, name: c.name }))
 ];
 
-// 80 PRODUCTOS EN TOTAL (20 POR CATEGORÍA)
+// Banners Principales del Slider Superior
+export const MAIN_BANNERS = [
+  {
+    id: 1,
+    title: 'Manicure + Pedicure Express',
+    subtitle: 'Tiempo récord de una hora con café de cortesía',
+    badge: 'Agrégalo en tu carrito con 10% OFF',
+    image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 2,
+    title: 'Ahorra en tus Compras de la Semana',
+    subtitle: 'Las mejores ofertas en charcutería, frutas y víveres',
+    badge: 'Precios Especiales',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&auto=format&fit=crop&q=80'
+  }
+];
+
+// Cards Promocionales Destacadas
+export const PROMO_CARDS = [
+  {
+    id: 1,
+    title: '14% Detergente Optima',
+    discount: '-14%',
+    image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=500&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 2,
+    title: 'Nuggets Del Corral',
+    discount: '-10%',
+    image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 3,
+    title: 'Combo de Limpieza',
+    discount: '-10%',
+    image: 'https://images.unsplash.com/photo-1584813470613-5b1c1cad3d69?w=500&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 4,
+    title: 'Útiles Escolares y más',
+    discount: 'Especial',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&auto=format&fit=crop&q=80'
+  }
+];
+
+// Banners para la grilla de "Supermercado"
+export const SUPERMARKET_BANNERS = [
+  { id: 1, name: 'Alimentos', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80' },
+  { id: 2, name: 'Frutas y Verduras', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&auto=format&fit=crop&q=80' },
+  { id: 3, name: 'Carnicería y Pescadería', image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800&auto=format&fit=crop&q=80' },
+  { id: 4, name: 'Panadería, Pasteleria y Charcutería', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80' },
+  { id: 5, name: 'Farmacia', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80' },
+  { id: 6, name: 'Limpieza y Hogar', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80' },
+  { id: 7, name: 'Licoreria', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&auto=format&fit=crop&q=80' },
+  { id: 8, name: 'Bebidas', image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&auto=format&fit=crop&q=80' },
+  { id: 9, name: 'Cuidado Personal', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80' },
+  { id: 10, name: 'Recargas de Saldo Celular', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=80' },
+  { id: 11, name: 'Congelados y Refrigerados', image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop&q=80' },
+  { id: 12, name: 'Helados y Postres', image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&auto=format&fit=crop&q=80' },
+  { id: 13, name: 'Bebes', image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&auto=format&fit=crop&q=80' },
+  { id: 14, name: 'Cigarros', image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=800&auto=format&fit=crop&q=80' },
+  { id: 15, name: 'Electrónicos', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&auto=format&fit=crop&q=80' },
+  { id: 16, name: 'Mascotas', image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&auto=format&fit=crop&q=80' },
+  { id: 17, name: 'Importado', image: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=800&auto=format&fit=crop&q=80' },
+  { id: 18, name: 'Hogar', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80' },
+  { id: 19, name: 'Ferreteria', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80' },
+  { id: 20, name: 'Saludable', image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop&q=80' },
+  { id: 21, name: 'Papelería', image: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=800&auto=format&fit=crop&q=80' },
+  { id: 22, name: 'Juguetería y Fiesta', image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&auto=format&fit=crop&q=80' },
+  { id: 23, name: 'Automotriz', image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=800&auto=format&fit=crop&q=80' },
+  { id: 24, name: 'Deportes', image: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=800&auto=format&fit=crop&q=80' },
+  { id: 25, name: 'Ropa y Accesorios', image: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&auto=format&fit=crop&q=80' },
+  { id: 26, name: 'Delicatessen', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=80' },
+  { id: 27, name: 'Navidad', image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800&auto=format&fit=crop&q=80' },
+  { id: 28, name: 'Bodegón Italiano', image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&auto=format&fit=crop&q=80' }
+];
+
+// CATÁLOGO COMPLETO DE PRODUCTOS (AL MENOS 1 PRODUCTO POR CADA UNA DE LAS 28 CATEGORÍAS)
 export const PRODUCTS = [
-  // ==========================================
-  // 1. ALIMENTOS (20 Productos)
-  // ==========================================
+  // 1. Alimentos
   {
     id: 1,
     name: 'Harina de Maíz Blanco Precocida 1kg',
     category: 'Alimentos',
-    subcategory: 'Pastas y Harinas',
+    subcategory: 'Harinas y Cereales',
+    originalPriceUsd: 1.45,
     priceUsd: 1.25,
+    discountPercentage: 14,
     primePriceUsd: 1.10,
     stock: 45,
     sku: 'ALIM-001',
     dimensions: '1kg',
-    description: 'Harina de maíz blanco precocida ideal para la preparación de arepas, empanadas y hallacas.',
+    description: 'Harina de maíz blanco precocida ideal para la preparación de arepas y empanadas.',
     image: 'https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?w=500&auto=format&fit=crop&q=80'
   },
+  // 2. Frutas y Verduras
   {
     id: 2,
-    name: 'Arroz Blanco de Grano Largo 1kg',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 1.40,
-    primePriceUsd: 1.25,
-    stock: 60,
-    sku: 'ALIM-002',
-    dimensions: '1kg',
-    description: 'Arroz de grano entero seleccionador Tipo 1, libre de impurezas y de cocción rinda y suelta.',
-    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 3,
-    name: 'Pasta Spaghetti Tipo A 1kg',
-    category: 'Alimentos',
-    subcategory: 'Pastas y Harinas',
-    priceUsd: 1.60,
-    primePriceUsd: 1.45,
-    stock: 35,
-    sku: 'ALIM-003',
-    dimensions: '1kg',
-    description: 'Pasta elaborada con semola de trigo durrum seleccionada para una textura al dente perfecta.',
-    image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281358?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 4,
-    name: 'Aceite Vegetal 1L',
-    category: 'Alimentos',
-    subcategory: 'Aceites y Enlatados',
-    priceUsd: 3.20,
-    primePriceUsd: 2.90,
-    stock: 28,
-    sku: 'ALIM-004',
-    dimensions: '1 Litro',
-    description: 'Aceite 100% vegetal refinado, ideal para frituras, salteados y aderezar ensaladas.',
-    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 5,
-    name: 'Caraotas Negras Seleccionadas 500g',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 1.15,
-    primePriceUsd: 0.99,
-    stock: 50,
-    sku: 'ALIM-005',
-    dimensions: '500g',
-    description: 'Frijoles negros frescos seleccionados, de rápido ablandado y gran sabor.',
-    image: 'https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 6,
-    name: 'Azúcar Refinada Alta Pureza 1kg',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 1.30,
-    primePriceUsd: 1.15,
-    stock: 40,
-    sku: 'ALIM-006',
-    dimensions: '1kg',
-    description: 'Azúcar blanca refinada de disolución rápida para postres y bebidas.',
-    image: 'https://images.unsplash.com/photo-1622484210800-8851947e4362?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 7,
-    name: 'Atún en Lomo Desmenuzado en Aceite 140g',
-    category: 'Alimentos',
-    subcategory: 'Aceites y Enlatados',
-    priceUsd: 1.80,
-    primePriceUsd: 1.60,
-    stock: 30,
-    sku: 'ALIM-007',
-    dimensions: '140g',
-    description: 'Atún fresco conservado en aceite vegetal, alto contenido en Omega 3 y proteínas.',
-    image: 'https://images.unsplash.com/photo-1612862862369-026d36e2f183?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 8,
-    name: 'Mayonesa Tradicional 445g',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 2.80,
-    primePriceUsd: 2.50,
-    stock: 22,
-    sku: 'ALIM-008',
-    dimensions: '445g',
-    description: 'Mayonesa cremosa con toque de limón, perfecta para aderezar hamburguesas y ensaladas.',
-    image: 'https://images.unsplash.com/photo-1585325701165-351af916e581?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 9,
-    name: 'Salsa de Tomate Ketchup 397g',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 1.95,
-    primePriceUsd: 1.75,
-    stock: 18,
-    sku: 'ALIM-009',
-    dimensions: '397g',
-    description: 'Salsa de tomate tipo Ketchup elaborada con tomates maduros y especias naturales.',
-    image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 10,
-    name: 'Avena en Hojuelas Integrales 400g',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 1.50,
-    primePriceUsd: 1.30,
-    stock: 25,
-    sku: 'ALIM-010',
-    dimensions: '400g',
-    description: 'Hojuelas de avena 100% natural, fuente rica de fibra para desayunos saludables.',
-    image: 'https://images.unsplash.com/photo-1517093708362-e6e2f23282eb?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 11,
-    name: 'Lentejas Seleccionadas 500g',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 1.35,
-    primePriceUsd: 1.20,
-    stock: 32,
-    sku: 'ALIM-011',
-    dimensions: '500g',
-    description: 'Lentejas tiernas de grano mediano, ideales para sopas y guisados nutritivos.',
-    image: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 12,
-    name: 'Sal Marina Refinada 1kg',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 0.60,
-    primePriceUsd: 0.50,
-    stock: 75,
-    sku: 'ALIM-012',
-    dimensions: '1kg',
-    description: 'Sal marina fina y fluorada para la sazón diaria en tus comidas.',
-    image: 'https://images.unsplash.com/photo-1518110165384-307409247c43?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 13,
-    name: 'Sardinas en Tomate 170g',
-    category: 'Alimentos',
-    subcategory: 'Aceites y Enlatados',
-    priceUsd: 0.95,
-    primePriceUsd: 0.85,
-    stock: 40,
-    sku: 'ALIM-013',
-    dimensions: '170g',
-    description: 'Sardinas frescas guisadas en salsa de tomate concentrada.',
-    image: 'https://images.unsplash.com/photo-1534483509719-3feaee7c30da?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 14,
-    name: 'Mostaza Preparada 250g',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 1.10,
-    primePriceUsd: 0.95,
-    stock: 20,
-    sku: 'ALIM-014',
-    dimensions: '250g',
-    description: 'Mostaza suave y aromática para carnes, aderezos y perros calientes.',
-    image: 'https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 15,
-    name: 'Vinagre Blanco 500ml',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 0.85,
-    primePriceUsd: 0.75,
-    stock: 30,
-    sku: 'ALIM-015',
-    dimensions: '500ml',
-    description: 'Vinagre blanco ideal para desinfectar vegetales, sazonar y vinagretas.',
-    image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 16,
-    name: 'Maíz Dulce en Grano en Lata 400g',
-    category: 'Alimentos',
-    subcategory: 'Aceites y Enlatados',
-    priceUsd: 1.40,
-    primePriceUsd: 1.25,
-    stock: 28,
-    sku: 'ALIM-016',
-    dimensions: '400g',
-    description: 'Granos de maíz tierno conservados en agua y sal, listos para comer.',
-    image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 17,
-    name: 'Cereal de Maíz Azucarado 400g',
-    category: 'Alimentos',
-    subcategory: 'Granos y Cereales',
-    priceUsd: 3.50,
-    primePriceUsd: 3.10,
-    stock: 15,
-    sku: 'ALIM-017',
-    dimensions: '400g',
-    description: 'Hojuelas de maíz tostadas y escarchadas con azúcar, fortificadas con vitaminas.',
-    image: 'https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 18,
-    name: 'Galletas de Dulce Tipo María 250g',
-    category: 'Alimentos',
-    subcategory: 'Pastas y Harinas',
-    priceUsd: 1.20,
-    primePriceUsd: 1.05,
-    stock: 50,
-    sku: 'ALIM-018',
-    dimensions: '250g',
-    description: 'Galletas crujientes de sabor tradicional, perfectas con leche o café.',
-    image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 19,
-    name: 'Mermelada de Fresa 350g',
-    category: 'Alimentos',
-    subcategory: 'Salsas y Condimentos',
-    priceUsd: 2.60,
-    primePriceUsd: 2.30,
-    stock: 16,
-    sku: 'ALIM-019',
-    dimensions: '350g',
-    description: 'Mermelada con trozos reales de fresa, ideal para tostadas y repostería.',
-    image: 'https://images.unsplash.com/photo-1568819324698-c9233f81e626?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 20,
-    name: 'Pasta Penne Rigate 500g',
-    category: 'Alimentos',
-    subcategory: 'Pastas y Harinas',
-    priceUsd: 1.10,
-    primePriceUsd: 0.95,
-    stock: 24,
-    sku: 'ALIM-020',
-    dimensions: '500g',
-    description: 'Pasta corta estriada de sémola de trigo, excelente para retener salsas espesas.',
-    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=500&auto=format&fit=crop&q=80'
-  },
-
-  // ==========================================
-  // 2. FRUTAS Y VERDURAS (20 Productos)
-  // ==========================================
-  {
-    id: 21,
     name: 'Manzana Roja Red Delicious (Por kg)',
     category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
+    subcategory: 'Frutas',
+    originalPriceUsd: 3.50,
     priceUsd: 2.99,
+    discountPercentage: 15,
     primePriceUsd: 2.70,
     stock: 40,
     sku: 'FRUT-001',
     dimensions: '1kg aprox.',
-    description: 'Manzanas frescas, crujientes y muy dulces. Importadas y seleccionadas.',
+    description: 'Manzanas frescas, crujientes y muy dulces.',
     image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop&q=80'
   },
+  // 3. Carnicería y Pescadería
   {
-    id: 22,
-    name: 'Cambur / Banana Madura (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 0.99,
-    primePriceUsd: 0.85,
-    stock: 80,
-    sku: 'FRUT-002',
-    dimensions: '1kg aprox.',
-    description: 'Bananas locales llenas de potasio, ideales para meriendas y merengadas.',
-    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 23,
-    name: 'Naranja Dulce para Jugo (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 1.20,
-    primePriceUsd: 1.00,
-    stock: 65,
-    sku: 'FRUT-003',
-    dimensions: '1kg aprox.',
-    description: 'Naranjas jugosas cargadas de Vitamina C, perfectas para extraer jugo fresco.',
-    image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 24,
-    name: 'Fresas Frescas de Montaña 500g',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 2.50,
-    primePriceUsd: 2.20,
-    stock: 18,
-    sku: 'FRUT-004',
-    dimensions: '500g',
-    description: 'Fresas seleccionadas de la zona alta, de sabor intenso y color brillante.',
-    image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 25,
-    name: 'Aguacate Hass de Primera (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 2.20,
-    primePriceUsd: 1.95,
+    id: 3,
+    name: 'Pechuga de Pollo Fresca sin Piel (Por kg)',
+    category: 'Carnicería y Pescadería',
+    subcategory: 'Pollo',
+    priceUsd: 4.80,
+    primePriceUsd: 4.20,
     stock: 30,
-    sku: 'FRUT-005',
+    sku: 'CARN-001',
     dimensions: '1kg aprox.',
-    description: 'Aguacates de textura cremosa y sabor a nuez, excelentes para guacamole y ensaladas.',
-    image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop&q=80'
+    description: 'Pechuga de pollo deshuesada y limpia de primera calidad.',
+    image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&auto=format&fit=crop&q=80'
   },
+  // 4. Panadería, Pasteleria y Charcutería
   {
-    id: 26,
-    name: 'Tomate Perita Maduro (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.50,
-    primePriceUsd: 1.30,
-    stock: 50,
-    sku: 'FRUT-006',
-    dimensions: '1kg aprox.',
-    description: 'Tomates rojos firmes y jugosos para preparar salsas caseras y guisos.',
-    image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 27,
-    name: 'Cebolla Blanca Limpia (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.30,
-    primePriceUsd: 1.15,
-    stock: 45,
-    sku: 'FRUT-007',
-    dimensions: '1kg aprox.',
-    description: 'Cebollas frescas de piel dorada, ingrediente base infaltable en tus comidas.',
-    image: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 28,
-    name: 'Papa Blanca Lavada (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Tubérculos',
-    priceUsd: 1.40,
-    primePriceUsd: 1.25,
-    stock: 70,
-    sku: 'FRUT-008',
-    dimensions: '1kg aprox.',
-    description: 'Papas de cultivo nacional, ideales para puré, sancochos o papas fritas.',
-    image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 29,
-    name: 'Zanahoria Fresca (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.10,
-    primePriceUsd: 0.95,
-    stock: 40,
-    sku: 'FRUT-009',
-    dimensions: '1kg aprox.',
-    description: 'Zanahorias dulces y crujientes, ricas en betacaroteno.',
-    image: 'https://images.unsplash.com/photo-1598170845058-12ef4a69b055?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 30,
-    name: 'Limón Criollo Jugoso (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 0.90,
-    primePriceUsd: 0.80,
-    stock: 60,
-    sku: 'FRUT-010',
-    dimensions: '1kg aprox.',
-    description: 'Limones ácidos y con abundante jugo para limonadas o aderezar carnes.',
-    image: 'https://images.unsplash.com/photo-1534531141161-e41604085429?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 31,
-    name: 'Pimentón Rojo Gigante (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.80,
-    primePriceUsd: 1.60,
-    stock: 25,
-    sku: 'FRUT-011',
-    dimensions: '1kg aprox.',
-    description: 'Pimentones carnosos y de intenso aroma para sofritos y ensaladas.',
-    image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 32,
-    name: 'Lechuga Romana Fresca (Unidad)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 0.85,
-    primePriceUsd: 0.70,
-    stock: 20,
-    sku: 'FRUT-012',
-    dimensions: '1 unidad',
-    description: 'Hojas verdes de lechuga crujiente, desinfectada y lista para ensaladas.',
-    image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 33,
-    name: 'Brócoli Fresco (Unidad)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.40,
-    primePriceUsd: 1.20,
-    stock: 15,
-    sku: 'FRUT-013',
-    dimensions: '1 unidad',
-    description: 'Cabezas de brócoli verde intenso, excelente al vapor o salteado.',
-    image: 'https://images.unsplash.com/photo-1459411621453-7b03166346a9?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 34,
-    name: 'Ajo Morado Cabeza Grande 250g',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.90,
-    primePriceUsd: 1.70,
-    stock: 35,
-    sku: 'FRUT-014',
-    dimensions: '250g',
-    description: 'Dientes de ajo seco con sabor concentrado para adobar todo tipo de comidas.',
-    image: 'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 35,
-    name: 'Plátano Verde (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Tubérculos',
-    priceUsd: 1.20,
-    primePriceUsd: 1.05,
-    stock: 50,
-    sku: 'FRUT-015',
-    dimensions: '1kg aprox.',
-    description: 'Plátanos verdes firmes, ideales para preparar tostones o patacones.',
-    image: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 36,
-    name: 'Plátano Maduro (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Tubérculos',
-    priceUsd: 1.20,
-    primePriceUsd: 1.05,
-    stock: 45,
-    sku: 'FRUT-016',
-    dimensions: '1kg aprox.',
-    description: 'Plátanos maduros súper dulces para tajadas fritas o al horno.',
-    image: 'https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 37,
-    name: 'Yuca Dulce de Raíz (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Tubérculos',
-    priceUsd: 0.95,
-    primePriceUsd: 0.85,
-    stock: 40,
-    sku: 'FRUT-017',
-    dimensions: '1kg aprox.',
-    description: 'Yuca blanca suave de rápido cocimiento, perfecta con guasacaca.',
-    image: 'https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 38,
-    name: 'Piña Criolla Dulce (Unidad)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 1.80,
-    primePriceUsd: 1.50,
-    stock: 22,
-    sku: 'FRUT-018',
-    dimensions: '1 unidad',
-    description: 'Piña de aroma frutal y pulpa amarilla muy dulce.',
-    image: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 39,
-    name: 'Melón Amarillo Dulce (Unidad)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Frutas Frescas',
-    priceUsd: 2.10,
-    primePriceUsd: 1.85,
-    stock: 14,
-    sku: 'FRUT-019',
-    dimensions: '1 unidad',
-    description: 'Melón aromático y refrescante para desayunos y postres.',
-    image: 'https://images.unsplash.com/photo-1595855759920-86582396756a?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 40,
-    name: 'Calabacín Verde (Por kg)',
-    category: 'Frutas y Verduras',
-    subcategory: 'Verduras y Hortalizas',
-    priceUsd: 1.15,
-    primePriceUsd: 1.00,
-    stock: 28,
-    sku: 'FRUT-020',
-    dimensions: '1kg aprox.',
-    description: 'Calabacines tiernos bajos en calorías para cremas y salteados.',
-    image: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=500&auto=format&fit=crop&q=80'
-  },
-
-  // ==========================================
-  // 3. BEBIDAS Y LÁCTEOS (20 Productos)
-  // ==========================================
-  {
-    id: 41,
-    name: 'Leche Completa en Polvo 900g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 8.50,
-    primePriceUsd: 7.90,
-    stock: 30,
-    sku: 'BEB-001',
-    dimensions: '900g',
-    description: 'Leche en polvo instantánea rinde 7 litros, enriquecida con calcio y Vitaminas A y D.',
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 42,
-    name: 'Leche Líquida Pasteurizada 1L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 1.65,
-    primePriceUsd: 1.45,
-    stock: 40,
-    sku: 'BEB-002',
-    dimensions: '1 Litro',
-    description: 'Leche de vaca pasteurizada de textura cremosa lista para servir.',
-    image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 43,
+    id: 4,
     name: 'Queso Blanco Duro Criollo (500g)',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
+    category: 'Panadería, Pasteleria y Charcutería',
+    subcategory: 'Quesos',
+    originalPriceUsd: 4.20,
     priceUsd: 3.50,
+    discountPercentage: 16,
     primePriceUsd: 3.10,
     stock: 25,
-    sku: 'BEB-003',
+    sku: 'CHAR-001',
     dimensions: '500g',
-    description: 'Queso blanco artesanal salado ideal para rallar sobre arepas y empanadas.',
+    description: 'Queso blanco artesanal salado ideal para rallar.',
     image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=500&auto=format&fit=crop&q=80'
   },
+  // 5. Farmacia
   {
-    id: 44,
-    name: 'Queso Amarillo Gouda Rebanado 250g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 2.90,
-    primePriceUsd: 2.65,
-    stock: 20,
-    sku: 'BEB-004',
-    dimensions: '250g',
-    description: 'Láminas de queso gouda de sabor suave que se funde perfectamente.',
-    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 45,
-    name: 'Mantequilla con Sal 500g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 3.20,
-    primePriceUsd: 2.85,
-    stock: 35,
-    sku: 'BEB-005',
-    dimensions: '500g',
-    description: 'Mantequilla cremosa pasteurizada para untar pan o usar en repostería.',
-    image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 46,
-    name: 'Yogur Griego Natural 500g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 2.80,
-    primePriceUsd: 2.50,
-    stock: 15,
-    sku: 'BEB-006',
-    dimensions: '500g',
-    description: 'Yogur espeso y proteico sin azúcar añadida, ideal para desayunos con frutas.',
-    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 47,
-    name: 'Jugo Natural de Naranja 1.5L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 2.10,
-    primePriceUsd: 1.85,
-    stock: 28,
-    sku: 'BEB-007',
-    dimensions: '1.5 Litros',
-    description: 'Jugo pasteurizado de pulpa de naranja natural sin conservantes artificiales.',
-    image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 48,
-    name: 'Refresco Cola Sabor Original 2L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 2.00,
-    primePriceUsd: 1.75,
-    stock: 50,
-    sku: 'BEB-008',
-    dimensions: '2 Litros',
-    description: 'Refresco gaseoso efervescente de clásico sabor a cola para acompañar tus comidas.',
-    image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 49,
-    name: 'Agua Mineral Natural 1.5L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 0.75,
-    primePriceUsd: 0.60,
-    stock: 90,
-    sku: 'BEB-009',
-    dimensions: '1.5 Litros',
-    description: 'Agua purificada de manantial ideal para la hidratación diaria.',
-    image: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 50,
-    name: 'Café Molido Gourmet 250g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Café y Achocolatados',
-    priceUsd: 2.95,
-    primePriceUsd: 2.60,
-    stock: 40,
-    sku: 'BEB-010',
-    dimensions: '250g',
-    description: 'Café 100% arábica de tueste oscuro con notas a chocolate y aroma intenso.',
-    image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 51,
-    name: 'Bebida Achocolatada en Polvo 400g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Café y Achocolatados',
-    priceUsd: 3.40,
-    primePriceUsd: 3.00,
-    stock: 22,
-    sku: 'BEB-011',
-    dimensions: '400g',
-    description: 'Polvo de cacao fortificado ideal para preparar bebidas frías o calientes con leche.',
-    image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 52,
-    name: 'Jamón Cocido de Pierna 250g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 3.10,
-    primePriceUsd: 2.80,
-    stock: 18,
-    sku: 'BEB-012',
-    dimensions: '250g',
-    description: 'Rebanadas finas de jamón de cerdo cocido de sabor suave.',
-    image: 'https://images.unsplash.com/photo-1524182576066-1d963e940027?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 53,
-    name: 'Té Frío Sabor a Durazno 1.5L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
+    id: 5,
+    name: 'Alcohol Antiséptico 70% 500ml',
+    category: 'Farmacia',
+    subcategory: 'Materiales Médicos y Quirúrgicos',
     priceUsd: 1.80,
-    primePriceUsd: 1.55,
-    stock: 30,
-    sku: 'BEB-013',
-    dimensions: '1.5 Litros',
-    description: 'Bebida de té negro instantáneo infusionado con dulce sabor a durazno.',
-    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 54,
-    name: 'Bebida de Malta Sin Alcohol 6-Pack',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 3.90,
-    primePriceUsd: 3.50,
-    stock: 25,
-    sku: 'BEB-014',
-    dimensions: '6 Botellas x 250ml',
-    description: 'Bebida de cebada malteada nutritiva, refrescante y cargada de energía.',
-    image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 55,
-    name: 'Crema de Leche para Batir 300g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 2.20,
-    primePriceUsd: 1.95,
-    stock: 16,
-    sku: 'BEB-015',
-    dimensions: '300g',
-    description: 'Crema de leche con 35% de materia grasa para preparar chantilly y postres.',
-    image: 'https://images.unsplash.com/photo-1576186726115-4d51596775d1?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 56,
-    name: 'Queso Mozzarella para Pizza 300g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 3.20,
-    primePriceUsd: 2.90,
-    stock: 20,
-    sku: 'BEB-016',
-    dimensions: '300g',
-    description: 'Bloque de mozzarella de excelente derretimiento e hilos elásticos.',
-    image: 'https://images.unsplash.com/photo-1559561853-08451507cbe7?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 57,
-    name: 'Refresco Sabor Sabor Lima-Limón 2L',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 1.90,
-    primePriceUsd: 1.70,
-    stock: 35,
-    sku: 'BEB-017',
-    dimensions: '2 Litros',
-    description: 'Bebida carbonatada transparente de sabor cítrico ultra refrescante.',
-    image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 58,
-    name: 'Crema No Láctea para Café 400g',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Café y Achocolatados',
-    priceUsd: 4.10,
-    primePriceUsd: 3.70,
-    stock: 12,
-    sku: 'BEB-018',
-    dimensions: '400g',
-    description: 'Sazonador en polvo para darle suavidad y cremosidad a tu café negro.',
-    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 59,
-    name: 'Suero de Leche Salado 500ml',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Lácteos y Quesos',
-    priceUsd: 1.30,
-    primePriceUsd: 1.10,
-    stock: 30,
-    sku: 'BEB-019',
+    primePriceUsd: 1.50,
+    stock: 50,
+    sku: 'FARM-001',
     dimensions: '500ml',
-    description: 'Suero líquido salado tradicional para acompañar arepas calientes.',
-    image: 'https://images.unsplash.com/photo-1528750997573-59b89d66f4f7?w=500&auto=format&fit=crop&q=80'
+    description: 'Alcohol desinfectante de uso externo para curaciones e higiene.',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=80'
   },
+  // 6. Limpieza y Hogar
   {
-    id: 60,
-    name: 'Cerveza Pilsen en Lata 6-Pack',
-    category: 'Bebidas y Lácteos',
-    subcategory: 'Jugos y Refrescos',
-    priceUsd: 5.50,
-    primePriceUsd: 4.99,
-    stock: 40,
-    sku: 'BEB-020',
-    dimensions: '6 Latas x 355ml',
-    description: 'Cerveza tipo pilsen dorada y refrescante de cuerpo ligero.',
-    image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&auto=format&fit=crop&q=80'
-  },
-
-  // ==========================================
-  // 4. CUIDADO PERSONAL Y LIMPIEZA (20 Productos)
-  // ==========================================
-  {
-    id: 61,
+    id: 6,
     name: 'Detergente Multiuso en Polvo 1kg',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
+    category: 'Limpieza y Hogar',
+    subcategory: 'Lavado de Ropa',
+    originalPriceUsd: 3.15,
     priceUsd: 2.70,
+    discountPercentage: 14,
     primePriceUsd: 2.40,
     stock: 35,
     sku: 'LIMP-001',
     dimensions: '1kg',
-    description: 'Detergente con partículas removedoras de grasa para ropa blanca y de color.',
+    description: 'Detergente con partículas cortagrasa para todo tipo de ropa.',
     image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=500&auto=format&fit=crop&q=80'
   },
+  // 7. Licoreria
   {
-    id: 62,
-    name: 'Lavaplatos Líquido Cítrico 500ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 1.50,
-    primePriceUsd: 1.30,
-    stock: 45,
-    sku: 'LIMP-002',
-    dimensions: '500ml',
-    description: 'Fórmula corta grasa concentrada con agradable aroma a limón.',
-    image: 'https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?w=500&auto=format&fit=crop&q=80'
+    id: 7,
+    name: 'Ron Añejo Reserva 750ml',
+    category: 'Licoreria',
+    subcategory: 'Ron',
+    priceUsd: 12.50,
+    primePriceUsd: 10.99,
+    stock: 15,
+    sku: 'LICO-001',
+    dimensions: '750ml',
+    description: 'Ron de barrica de roble con suave aroma a madera y vainilla.',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=500&auto=format&fit=crop&q=80'
   },
+  // 8. Bebidas
   {
-    id: 63,
-    name: 'Jabón de Baño Humectante (Pack 3 unid)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 2.20,
-    primePriceUsd: 1.95,
+    id: 8,
+    name: 'Refresco Cola Sabor Original 2L',
+    category: 'Bebidas',
+    subcategory: 'Bebidas Gaseosas',
+    priceUsd: 2.00,
+    primePriceUsd: 1.75,
     stock: 50,
-    sku: 'LIMP-003',
-    dimensions: '3 x 120g',
-    description: 'Pastillas de jabón corporal con glicerina que limpian e hidratan la piel.',
-    image: 'https://images.unsplash.com/photo-1607006482602-76ca97db8b4b?w=500&auto=format&fit=crop&q=80'
+    sku: 'BEB-001',
+    dimensions: '2 Litros',
+    description: 'Refresco efervescente clásico para tus reuniones.',
+    image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop&q=80'
   },
+  // 9. Cuidado Personal
   {
-    id: 64,
+    id: 9,
     name: 'Champú Restauración Profunda 400ml',
-    category: 'Cuidado Personal y Limpieza',
+    category: 'Cuidado Personal',
     subcategory: 'Cuidado del Cabello',
+    originalPriceUsd: 5.20,
     priceUsd: 4.50,
+    discountPercentage: 13,
     primePriceUsd: 3.99,
     stock: 20,
-    sku: 'LIMP-004',
+    sku: 'CUID-001',
     dimensions: '400ml',
-    description: 'Champú con aceite de argán que fortalece el cabello dañado desde la raíz.',
+    description: 'Enriquecido con aceites naturales para cabello seco.',
     image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=500&auto=format&fit=crop&q=80'
   },
+  // 10. Recargas de Saldo Celular
   {
-    id: 65,
-    name: 'Acondicionador Suavizante 400ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Cuidado del Cabello',
+    id: 10,
+    name: 'Recarga Digital Movistar $5',
+    category: 'Recargas de Saldo Celular',
+    subcategory: 'Recarga Saldo Movistar',
+    priceUsd: 5.00,
+    primePriceUsd: 4.90,
+    stock: 100,
+    sku: 'RECA-001',
+    dimensions: 'Digital',
+    description: 'Acreditación inmediata de saldo para líneas móviles.',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=80'
+  },
+  // 11. Congelados y Refrigerados
+  {
+    id: 11,
+    name: 'Tequeños de Queso Congelados (Pack 20 unid)',
+    category: 'Congelados y Refrigerados',
+    subcategory: 'Masas y Pasapalos',
     priceUsd: 4.50,
-    primePriceUsd: 3.99,
-    stock: 18,
-    sku: 'LIMP-005',
-    dimensions: '400ml',
-    description: 'Acondicionador para desenredar fácilmente dejando el cabello sedoso.',
-    image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 66,
-    name: 'Crema Dental Triple Acción 100ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 1.80,
-    primePriceUsd: 1.60,
-    stock: 60,
-    sku: 'LIMP-006',
-    dimensions: '100ml',
-    description: 'Protección anticaries, blancura y aliento fresco con flúor activo.',
-    image: 'https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 67,
-    name: 'Desodorante en Barra Masculino 85g',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 3.20,
-    primePriceUsd: 2.80,
+    primePriceUsd: 3.90,
     stock: 25,
-    sku: 'LIMP-007',
-    dimensions: '85g',
-    description: 'Protección antitranspirante durante 48 horas contra el mal olor.',
-    image: 'https://images.unsplash.com/photo-1619451334792-150fd785ee74?w=500&auto=format&fit=crop&q=80'
+    sku: 'CONG-001',
+    dimensions: '20 unidades',
+    description: 'Tequeños hojaldrados rellenos de queso blanco abundante.',
+    image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop&q=80'
   },
+  // 12. Helados y Postres
   {
-    id: 68,
-    name: 'Papel Higiénico Doble Hoja (Pack 4 Rollos)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 2.10,
-    primePriceUsd: 1.85,
-    stock: 55,
-    sku: 'LIMP-008',
-    dimensions: '4 Rollos',
-    description: 'Papel suave y resistente de fibra 100% natural.',
-    image: 'https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=500&auto=format&fit=crop&q=80'
+    id: 12,
+    name: 'Helado Cremoso de Mantecado 1L',
+    category: 'Helados y Postres',
+    subcategory: 'Helados',
+    priceUsd: 3.80,
+    primePriceUsd: 3.30,
+    stock: 18,
+    sku: 'HELA-001',
+    dimensions: '1 Litro',
+    description: 'Helado cremoso artesanal de vainilla tradicional.',
+    image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=500&auto=format&fit=crop&q=80'
   },
+  // 13. Bebes
   {
-    id: 69,
-    name: 'Suavizante de Telas Aroma Lavanda 800ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
+    id: 13,
+    name: 'Pañales Etapa 3 (Paquete 30 unid)',
+    category: 'Bebes',
+    subcategory: 'Higiene',
+    priceUsd: 9.50,
+    primePriceUsd: 8.70,
+    stock: 30,
+    sku: 'BEBE-001',
+    dimensions: '30 unidades',
+    description: 'Pañales ultra absorbentes con ajuste anatómico.',
+    image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=500&auto=format&fit=crop&q=80'
+  },
+  // 14. Cigarros
+  {
+    id: 14,
+    name: 'Cajetilla de Cigarrillos Mentolados 20s',
+    category: 'Cigarros',
+    subcategory: 'Cigarrillos',
+    priceUsd: 3.20,
+    primePriceUsd: 2.90,
+    stock: 40,
+    sku: 'CIGA-001',
+    dimensions: '20 cigarrillos',
+    description: 'Fórmula clásica refrescante.',
+    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=500&auto=format&fit=crop&q=80'
+  },
+  // 15. Electrónicos
+  {
+    id: 15,
+    name: 'Audífonos Inalámbricos Bluetooth 5.0',
+    category: 'Electrónicos',
+    subcategory: 'Accesorios para Celulares',
+    priceUsd: 14.99,
+    primePriceUsd: 12.99,
+    stock: 15,
+    sku: 'ELEC-001',
+    dimensions: 'Estuche compacto',
+    description: 'Sonido HD con cancelación de ruido pasiva y batería duradera.',
+    image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&auto=format&fit=crop&q=80'
+  },
+  // 16. Mascotas
+  {
+    id: 16,
+    name: 'Alimento Seco para Perros Adultos 2kg',
+    category: 'Mascotas',
+    subcategory: 'Alimento',
+    priceUsd: 6.90,
+    primePriceUsd: 5.99,
+    stock: 22,
+    sku: 'MASC-001',
+    dimensions: '2kg',
+    description: 'Sabor a carne y pollo con multivitaminas para la salud digestiva.',
+    image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&auto=format&fit=crop&q=80'
+  },
+  // 17. Importado
+  {
+    id: 17,
+    name: 'Chocolates Surtidos Importados 200g',
+    category: 'Importado',
+    subcategory: 'Snacks Importados',
+    priceUsd: 5.50,
+    primePriceUsd: 4.80,
+    stock: 12,
+    sku: 'IMPO-001',
+    dimensions: '200g',
+    description: 'Selección de bombones finos de chocolate con leche.',
+    image: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=80'
+  },
+  // 18. Hogar
+  {
+    id: 18,
+    name: 'Sartén Antiadherente de Aluminio 24cm',
+    category: 'Hogar',
+    subcategory: 'Cocina y Baño',
+    priceUsd: 8.90,
+    primePriceUsd: 7.90,
+    stock: 20,
+    sku: 'HOGA-001',
+    dimensions: '24cm',
+    description: 'Sartén de teflón reforzado con mango térmico antideslizante.',
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&auto=format&fit=crop&q=80'
+  },
+  // 19. Ferreteria
+  {
+    id: 19,
+    name: 'Juego de Destornilladores de Precisión (6 Pzas)',
+    category: 'Ferreteria',
+    subcategory: 'Herramientas',
+    priceUsd: 4.20,
+    primePriceUsd: 3.60,
+    stock: 35,
+    sku: 'FERR-001',
+    dimensions: 'Set 6 piezas',
+    description: 'Puntas magnéticas cromadas para reparación electrónica y mecánica.',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop&q=80'
+  },
+  // 20. Saludable
+  {
+    id: 20,
+    name: 'Granola Orgánica con Miel y Frutos Secos 300g',
+    category: 'Saludable',
+    subcategory: 'Cereales y Granolas Saludables',
+    priceUsd: 3.60,
+    primePriceUsd: 3.10,
+    stock: 25,
+    sku: 'SALU-001',
+    dimensions: '300g',
+    description: 'Sin azúcar refinada añadida, rica en fibra y antioxidantes.',
+    image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&auto=format&fit=crop&q=80'
+  },
+  // 21. Papelería
+  {
+    id: 21,
+    name: 'Cuaderno Espiral Carta 100 Hojas',
+    category: 'Papelería',
+    subcategory: 'Librería',
+    priceUsd: 1.50,
+    primePriceUsd: 1.20,
+    stock: 60,
+    sku: 'PAPE-001',
+    dimensions: '100 Hojas',
+    description: 'Hojas de alto gramaje con cuadrícula limpia para estudiantes y oficina.',
+    image: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=500&auto=format&fit=crop&q=80'
+  },
+  // 22. Juguetería y Fiesta
+  {
+    id: 22,
+    name: 'Set de Globos Multicolores para Fiesta (50 Pzas)',
+    category: 'Juguetería y Fiesta',
+    subcategory: 'Fiesta',
+    priceUsd: 2.20,
+    primePriceUsd: 1.80,
+    stock: 45,
+    sku: 'JUGU-001',
+    dimensions: '50 unidades',
+    description: 'Globos de látex biodegradables de alta resistencia.',
+    image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=500&auto=format&fit=crop&q=80'
+  },
+  // 23. Automotriz
+  {
+    id: 23,
+    name: 'Aceite de Motor Semi-Sintético 15W-40 1L',
+    category: 'Automotriz',
+    subcategory: 'Lubricantes y Fluidos',
+    priceUsd: 6.50,
+    primePriceUsd: 5.80,
+    stock: 28,
+    sku: 'AUTO-001',
+    dimensions: '1 Litro',
+    description: 'Protección avanzada contra el desgaste y calor en motores a gasolina.',
+    image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=500&auto=format&fit=crop&q=80'
+  },
+  // 24. Deportes
+  {
+    id: 24,
+    name: 'Balón de Fútbol Profesional N° 5',
+    category: 'Deportes',
+    subcategory: 'Implementos',
+    priceUsd: 11.90,
+    primePriceUsd: 9.99,
+    stock: 14,
+    sku: 'DEPO-001',
+    dimensions: 'Tamaño 5',
+    description: 'Cubierta sintética cosida a mano ideal para césped y cancha dura.',
+    image: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=500&auto=format&fit=crop&q=80'
+  },
+  // 25. Ropa y Accesorios
+  {
+    id: 25,
+    name: 'Franela de Algodón Cuello Redondo Hombre',
+    category: 'Ropa y Accesorios',
+    subcategory: 'Top Caballero',
+    priceUsd: 7.50,
+    primePriceUsd: 6.20,
+    stock: 30,
+    sku: 'ROPA-001',
+    dimensions: 'Talla M',
+    description: 'Algodón 100% transpirable de horma cómoda.',
+    image: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=500&auto=format&fit=crop&q=80'
+  },
+  // 26. Delicatessen
+  {
+    id: 26,
+    name: 'Aceitunas Verdes Rellenas de Pimentón 250g',
+    category: 'Delicatessen',
+    subcategory: 'Gourmet',
     priceUsd: 2.90,
     primePriceUsd: 2.50,
-    stock: 22,
-    sku: 'LIMP-009',
-    dimensions: '800ml',
-    description: 'Deja tus prendas ultra suaves y con un perfume prolongado a lavanda.',
-    image: 'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=500&auto=format&fit=crop&q=80'
+    stock: 20,
+    sku: 'DELI-001',
+    dimensions: '250g',
+    description: 'Aceitunas españolas seleccionadas en salmuera aromática.',
+    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&auto=format&fit=crop&q=80'
   },
+  // 27. Navidad
   {
-    id: 70,
-    name: 'Cloro Concentrado Desinfectante 1L',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 1.10,
-    primePriceUsd: 0.95,
+    id: 27,
+    name: 'Luces LED Navideñas Multicolores (100 Focos)',
+    category: 'Navidad',
+    subcategory: 'Navidad Articulos',
+    priceUsd: 4.90,
+    primePriceUsd: 3.99,
     stock: 40,
-    sku: 'LIMP-010',
-    dimensions: '1 Litro',
-    description: 'Elimina el 99.9% de gérmenes y bacterias en baños, pisos y superficies.',
-    image: 'https://images.unsplash.com/photo-1584634731339-252c581abfc5?w=500&auto=format&fit=crop&q=80'
+    sku: 'NAVI-001',
+    dimensions: '8 metros',
+    description: 'Serie de luces de bajo consumo con regulador de secuencias.',
+    image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=500&auto=format&fit=crop&q=80'
   },
+  // 28. Bodegón Italiano
   {
-    id: 71,
-    name: 'Limpiador Multiuso para Pisos 1L',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 1.60,
-    primePriceUsd: 1.40,
-    stock: 30,
-    sku: 'LIMP-011',
-    dimensions: '1 Litro',
-    description: 'Limpiador líquido aromático que deja los pisos relucientes sin enjuagar.',
-    image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 72,
-    name: 'Esponja Multiuso de Baño/Cocina (2 unidades)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 0.90,
-    primePriceUsd: 0.75,
-    stock: 65,
-    sku: 'LIMP-012',
-    dimensions: '2 Unidades',
-    description: 'Esponja con fibra abrasiva para eliminar suciedad pegada sin rayar.',
-    image: 'https://images.unsplash.com/photo-1585842378103-a1789c622e03?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 73,
-    name: 'Toallas de Papel Absorbente (2 Rollos)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 1.75,
-    primePriceUsd: 1.50,
-    stock: 35,
-    sku: 'LIMP-013',
-    dimensions: '2 Rollos',
-    description: 'Toallas de cocina súper absorbentes ideales para secar aceite o limpiar derrames.',
-    image: 'https://images.unsplash.com/photo-1608178398319-48f814d0750c?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 74,
-    name: 'Jabón Líquido Antibacterial Manos 250ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 2.10,
-    primePriceUsd: 1.80,
-    stock: 28,
-    sku: 'LIMP-014',
-    dimensions: '250ml',
-    description: 'Jabón con dispensador que remueve bacterias cuidando la piel de tus manos.',
-    image: 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 75,
-    name: 'Toallas Sanitarias Nocturnas (10 unidades)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 1.95,
-    primePriceUsd: 1.75,
-    stock: 32,
-    sku: 'LIMP-015',
-    dimensions: '10 Unidades',
-    description: 'Toallas ultrafinas con alas y centro absorbente para máxima seguridad.',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 76,
-    name: 'Máquina de Afeitar 3 Hojas (Pack 2 unid)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 2.80,
-    primePriceUsd: 2.50,
-    stock: 24,
-    sku: 'LIMP-016',
-    dimensions: '2 Unidades',
-    description: 'Afeitadoras desechables con cabeza móvil y banda lubricante con Aloe.',
-    image: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 77,
-    name: 'Toallitas Húmedas para Bebé (80 unidades)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 2.60,
-    primePriceUsd: 2.30,
-    stock: 30,
-    sku: 'LIMP-017',
-    dimensions: '80 Unidades',
-    description: 'Toallitas libres de alcohol e hipoalergénicas con manzanilla.',
-    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 78,
-    name: 'Desinfectante en Spray Multiuso 354g',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 4.80,
-    primePriceUsd: 4.20,
-    stock: 15,
-    sku: 'LIMP-018',
-    dimensions: '354g',
-    description: 'Aerosol que elimina virus y malos olores en colchones, muebles y telas.',
-    image: 'https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 79,
-    name: 'Bolsas de Basura Resistentes (Paquete 10 unid)',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Limpieza del Hogar',
-    priceUsd: 1.40,
-    primePriceUsd: 1.20,
-    stock: 50,
-    sku: 'LIMP-019',
-    dimensions: '10 Unidades (30L)',
-    description: 'Bolsas plásticas reforzadas anti-goteo para desechos del hogar.',
-    image: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=500&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 80,
-    name: 'Crema Corporal Hidratante 400ml',
-    category: 'Cuidado Personal y Limpieza',
-    subcategory: 'Higiene Personal',
-    priceUsd: 3.80,
-    primePriceUsd: 3.40,
+    id: 28,
+    name: 'Salsa Passata de Tomate Italiano 700g',
+    category: 'Bodegón Italiano',
+    subcategory: 'Salsas Italianas',
+    originalPriceUsd: 3.80,
+    priceUsd: 3.10,
+    discountPercentage: 18,
+    primePriceUsd: 2.70,
     stock: 22,
-    sku: 'LIMP-020',
-    dimensions: '400ml',
-    description: 'Loción corporal con manteca de karité para una piel suave durante todo el día.',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&auto=format&fit=crop&q=80'
+    sku: 'ITAL-001',
+    dimensions: '700g',
+    description: 'Puré de tomate madurado al sol importado de Italia.',
+    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=500&auto=format&fit=crop&q=80'
   }
 ];

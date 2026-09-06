@@ -27,6 +27,12 @@ export const ProductCard = ({ product }) => {
 
   const isOutOfStock = (product.stock || 0) === 0;
 
+  // Cálculo de Descuento
+  const discount = product.discountPercentage || 
+    (product.originalPriceUsd && product.originalPriceUsd > product.priceUsd 
+      ? Math.round(((product.originalPriceUsd - product.priceUsd) / product.originalPriceUsd) * 100)
+      : null);
+
   return (
     <div 
       onClick={handleClickCard}
@@ -34,15 +40,22 @@ export const ProductCard = ({ product }) => {
         isOutOfStock ? 'opacity-70' : ''
       }`}
     >
+      {/* Badge de Descuento (Roja) */}
+      {discount && (
+        <div className="absolute top-3 left-3 z-20 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
+          -{discount}%
+        </div>
+      )}
+
       {/* Badge Prime seguro */}
       {product.primePriceUsd !== undefined && product.primePriceUsd !== null && (
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-1 bg-amber-50 text-amber-900 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-amber-300 shadow-sm">
+        <div className={`absolute top-3 z-10 flex items-center gap-1 bg-amber-50 text-amber-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-300 shadow-sm ${discount ? 'right-3' : 'left-3'}`}>
           <Crown className="w-3 h-3 text-amber-600 fill-amber-500" />
           <span>Prime: {formatCurrency(product.primePriceUsd, currency, exchangeRate)}</span>
         </div>
       )}
 
-      {isOutOfStock && (
+      {isOutOfStock && !discount && (
         <span className="absolute top-3 right-3 z-10 bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-md border border-red-200">
           Agotado
         </span>
@@ -72,8 +85,13 @@ export const ProductCard = ({ product }) => {
 
         <div className="pt-2 border-t border-gray-100 flex items-end justify-between gap-2">
           <div>
-            <span className="text-xs text-gray-400 block leading-none font-medium">Precio</span>
-            <span className="text-base font-black text-gray-900 block leading-tight">
+            {/* Precio Original Tachado si está en oferta */}
+            {product.originalPriceUsd && (
+              <span className="text-[11px] text-gray-400 line-through font-semibold block leading-none">
+                {formatCurrency(product.originalPriceUsd, currency, exchangeRate)}
+              </span>
+            )}
+            <span className={`text-base font-black block leading-tight ${product.originalPriceUsd ? 'text-red-600' : 'text-gray-900'}`}>
               {formatCurrency(product.priceUsd || 0, currency, exchangeRate)}
             </span>
           </div>
