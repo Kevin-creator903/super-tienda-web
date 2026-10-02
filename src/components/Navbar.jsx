@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, MapPin, User, ShoppingBag, Menu, Crown, X, Filter } from 'lucide-react';
+import { Search, MapPin, User, ShoppingBag, Menu, Crown, X, Filter, PackageCheck } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import * as mockData from '../data/mockData';
 import { formatCurrency } from '../utils/formatters';
@@ -18,7 +18,8 @@ export const Navbar = () => {
     openFilterDrawer,
     setSelectedProduct,
     primeOnlyFilter, setPrimeOnlyFilter,
-    inStockFilter, setInStockFilter
+    inStockFilter, setInStockFilter,
+    isAdminViewOpen, toggleAdminView
   } = useStore();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -52,10 +53,10 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white shadow-lg">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-sky-700 via-emerald-700 to-sky-600 text-white shadow-xl border-b border-amber-400/30">
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:gap-6">
         
-        {/* Logo HINEX */}
+        {/* Logo */}
         <div onClick={() => setSelectedCategory('Todos los productos')} className="flex-shrink-0">
           <HinexLogo className="h-11 md:h-12" />
         </div>
@@ -63,11 +64,10 @@ export const Navbar = () => {
         {/* Buscador Avanzado */}
         <div className="flex-1 max-w-2xl relative" ref={searchRef}>
           <div className="flex items-center bg-white rounded-full shadow-inner overflow-hidden p-1 focus-within:ring-2 focus-within:ring-amber-400">
-            
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs py-2 px-3 border-r border-gray-200 focus:outline-none cursor-pointer hidden sm:block max-w-[140px] truncate"
+              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2 px-3 border-r border-emerald-100 focus:outline-none cursor-pointer hidden sm:block max-w-[140px] truncate"
             >
               {categoriesList.map((cat) => (
                 <option key={cat.id || cat.name} value={cat.name}>
@@ -78,14 +78,14 @@ export const Navbar = () => {
 
             <input
               type="text"
-              placeholder="Buscar productos por nombre, marca o SKU..."
+              placeholder="Buscar víveres, pollo, embutidos..."
               value={searchQuery || ''}
               onFocus={() => setIsSearchOpen(true)}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setIsSearchOpen(true);
               }}
-              className="w-full py-1.5 px-3 text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none text-xs md:text-sm"
+              className="w-full py-1.5 px-3 text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none text-xs md:text-sm font-medium"
             />
 
             {searchQuery && (
@@ -94,15 +94,15 @@ export const Navbar = () => {
               </button>
             )}
 
-            <button className="bg-emerald-700 hover:bg-emerald-800 text-white p-2 rounded-full transition-colors flex-shrink-0 cursor-pointer">
-              <Search className="w-4 h-4 md:w-5 md:h-5" />
+            <button className="bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black p-2 rounded-full transition-all flex-shrink-0 cursor-pointer shadow-md">
+              <Search className="w-4 h-4 md:w-5 md:h-5 text-emerald-950" />
             </button>
           </div>
 
           {/* Autocompletado */}
           {isSearchOpen && searchSuggestions.length > 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-emerald-100 overflow-hidden z-50">
-              <div className="p-2 bg-slate-50 border-b border-gray-100 flex items-center justify-between text-[11px] font-bold text-gray-500">
+              <div className="p-2 bg-emerald-50 border-b border-emerald-100 flex items-center justify-between text-[11px] font-bold text-emerald-800">
                 <span>SUGERENCIAS DE BÚSQUEDA</span>
                 <span>{searchSuggestions.length} RESULTADOS</span>
               </div>
@@ -116,9 +116,9 @@ export const Navbar = () => {
                     <img src={prod.image} alt={prod.name} className="w-10 h-10 object-contain rounded-lg bg-gray-50 p-1 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-bold text-gray-800 truncate">{prod.name}</h4>
-                      <span className="text-[10px] text-emerald-700 font-semibold">{prod.category}</span>
+                      <span className="text-[10px] text-sky-600 font-semibold">{prod.category}</span>
                     </div>
-                    <span className="text-xs font-black text-gray-900">
+                    <span className="text-xs font-black text-emerald-800">
                       {formatCurrency(prod.priceUsd, currency, exchangeRate)}
                     </span>
                   </div>
@@ -128,22 +128,37 @@ export const Navbar = () => {
           )}
         </div>
 
-        {/* Acciones del Usuario */}
+        {/* Acciones de usuario y Botón Admin */}
         <div className="flex items-center gap-3 md:gap-4 text-xs font-semibold">
-          <div className="hidden lg:flex items-center gap-1.5 bg-emerald-950/50 px-3 py-1.5 rounded-xl border border-emerald-700/50">
-            <MapPin className="w-4 h-4 text-amber-300" />
+          
+          {/* Botón Admin Pedidos */}
+          <button 
+            onClick={toggleAdminView}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-extrabold transition-all cursor-pointer border ${
+              isAdminViewOpen
+                ? 'bg-amber-400 text-emerald-950 border-amber-300 shadow-md'
+                : 'bg-emerald-800/80 hover:bg-emerald-700 text-amber-300 border-emerald-600/50'
+            }`}
+            title="Panel de Administración de Pedidos"
+          >
+            <PackageCheck className="w-4 h-4" />
+            <span className="hidden sm:inline">Admin Pedidos</span>
+          </button>
+
+          <div className="hidden lg:flex items-center gap-1.5 bg-sky-900/60 px-3 py-1.5 rounded-xl border border-sky-500/40">
+            <MapPin className="w-4 h-4 text-amber-400" />
             <div className="text-left leading-none">
               <span className="text-[9px] text-emerald-200 uppercase tracking-wider block">Zona</span>
               <span className="font-extrabold text-white">Carabobo</span>
             </div>
           </div>
 
-          {/* Moneda */}
-          <div className="flex items-center bg-emerald-950 p-0.5 rounded-lg border border-emerald-700/50">
+          {/* Selector Moneda */}
+          <div className="flex items-center bg-sky-900/80 p-0.5 rounded-lg border border-sky-500/40">
             <button
               onClick={() => setCurrency('USD')}
               className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
-                currency === 'USD' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-200 hover:text-white'
+                currency === 'USD' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
               }`}
             >
               $ USD
@@ -151,7 +166,7 @@ export const Navbar = () => {
             <button
               onClick={() => setCurrency('VES')}
               className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
-                currency === 'VES' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-200 hover:text-white'
+                currency === 'VES' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
               }`}
             >
               Bs VES
@@ -166,11 +181,11 @@ export const Navbar = () => {
           {/* Carrito */}
           <button 
             onClick={openCart}
-            className="relative bg-emerald-950 hover:bg-black p-2.5 rounded-full transition-colors border border-emerald-700/50 cursor-pointer"
+            className="relative bg-sky-900 hover:bg-sky-950 p-2.5 rounded-full transition-colors border border-sky-500/50 cursor-pointer shadow-md"
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5 text-amber-400" />
             {totalCartItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-amber-400 text-emerald-950 font-black rounded-full text-[10px] w-5 h-5 flex items-center justify-center shadow-md animate-bounce">
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white font-black rounded-full text-[10px] w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                 {totalCartItems}
               </span>
             )}
@@ -178,41 +193,37 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Menú Secundario Limpio con Botones de Acción */}
-      <nav className="bg-emerald-950/80 border-t border-emerald-800/60 text-xs font-semibold py-2 px-4">
+      {/* Menú de Botones */}
+      <nav className="bg-sky-950/90 border-t border-sky-800/60 text-xs font-semibold py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          
           <div className="flex items-center gap-3">
-            {/* Botón Abrir Categorías */}
             <button 
               onClick={openCategoryDrawer}
-              className="flex items-center gap-2 bg-emerald-800 hover:bg-emerald-700 text-white font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer border border-emerald-400/30"
             >
-              <Menu className="w-4 h-4 text-amber-300" />
+              <Menu className="w-4 h-4 text-amber-400" />
               <span>Categorías</span>
             </button>
 
-            {/* Botón Abrir Filtros */}
             <button 
               onClick={openFilterDrawer}
-              className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
             >
               <Filter className="w-4 h-4" />
               <span>Filtros</span>
             </button>
           </div>
 
-          {/* Chips Rápido */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPrimeOnlyFilter(!primeOnlyFilter)}
               className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all cursor-pointer ${
                 primeOnlyFilter 
                   ? 'bg-amber-400 text-emerald-950 shadow-md' 
-                  : 'bg-emerald-900/60 text-amber-300 hover:bg-emerald-900'
+                  : 'bg-sky-900/80 text-amber-400 hover:bg-sky-900'
               }`}
             >
-              <Crown className="w-3 h-3 fill-amber-400 text-amber-950" />
+              <Crown className="w-3 h-3 fill-amber-400 text-emerald-950" />
               <span>Solo Prime</span>
             </button>
 
@@ -221,13 +232,12 @@ export const Navbar = () => {
               className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
                 inStockFilter 
                   ? 'bg-emerald-500 text-white shadow-md' 
-                  : 'bg-emerald-900/60 text-emerald-200 hover:bg-emerald-900'
+                  : 'bg-sky-900/80 text-emerald-200 hover:bg-sky-900'
               }`}
             >
               <span>En Stock</span>
             </button>
           </div>
-
         </div>
       </nav>
     </header>

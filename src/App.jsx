@@ -10,6 +10,7 @@ import { OffersSection } from './components/OffersSection';
 import { SupermarketGrid } from './components/SupermarketGrid';
 import { CategoryDrawer } from './components/CategoryDrawer';
 import { FilterDrawer } from './components/FilterDrawer';
+import { AdminPanel } from './components/AdminPanel';
 import { useStore } from './store/useStore';
 import * as mockData from './data/mockData';
 import { MessageCircle, ShoppingBag, RotateCcw } from 'lucide-react';
@@ -26,13 +27,13 @@ export default function App() {
     primeOnlyFilter = false,
     sortBy = 'default',
     selectedProduct,
+    isAdminViewOpen = false,
     resetFilters
   } = useStore();
 
   const productList = Array.isArray(mockData.PRODUCTS) ? mockData.PRODUCTS : [];
   const isDefaultView = selectedCategory === 'Todos los productos' && !selectedSubcategory && !searchQuery;
 
-  // Lógica de Filtrado y Ordenamiento
   const filteredProducts = React.useMemo(() => {
     return productList
       .filter((product) => {
@@ -70,23 +71,17 @@ export default function App() {
       <FilterDrawer />
 
       <main className="max-w-7xl mx-auto px-4 py-6">
-        
-        {selectedProduct ? (
+        {isAdminViewOpen ? (
+          <AdminPanel />
+        ) : selectedProduct ? (
           <ProductDetailView />
         ) : (
           <>
-            {/* 1. Banners Promocionales Superior */}
             {isDefaultView && <PromoBannerSlider />}
-
-            {/* 2. Ofertas de la Semana */}
             {isDefaultView && <OffersSection />}
-
-            {/* 3. Grilla de Categorías "Supermercado" */}
             {isDefaultView && <SupermarketGrid />}
 
-            {/* 4. Catálogo de Productos a Ancho Completo (Hasta 6 columnas) */}
             <div id="catalog-section" className="w-full space-y-6 pt-2">
-              
               <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <nav className="text-xs text-emerald-700 font-semibold mb-0.5">

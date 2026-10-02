@@ -27,7 +27,6 @@ export const ProductCard = ({ product }) => {
 
   const isOutOfStock = (product.stock || 0) === 0;
 
-  // Cálculo de Descuento
   const discount = product.discountPercentage || 
     (product.originalPriceUsd && product.originalPriceUsd > product.priceUsd 
       ? Math.round(((product.originalPriceUsd - product.priceUsd) / product.originalPriceUsd) * 100)
@@ -36,32 +35,32 @@ export const ProductCard = ({ product }) => {
   return (
     <div 
       onClick={handleClickCard}
-      className={`bg-white rounded-2xl border border-emerald-100/80 shadow-sm hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between p-4 group relative cursor-pointer ${
+      className={`bg-white rounded-2xl border border-fheria-cream-dark shadow-sm hover:shadow-xl hover:border-fheria-light transition-all duration-300 flex flex-col justify-between p-4 group relative cursor-pointer ${
         isOutOfStock ? 'opacity-70' : ''
       }`}
     >
-      {/* Badge de Descuento (Roja) */}
+      {/* Badge Descuento (Rojo Manzana) */}
       {discount && (
-        <div className="absolute top-3 left-3 z-20 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
+        <div className="absolute top-3 left-3 z-20 bg-fheria-red text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
           -{discount}%
         </div>
       )}
 
-      {/* Badge Prime seguro */}
+      {/* Badge Prime (Mostaza) */}
       {product.primePriceUsd !== undefined && product.primePriceUsd !== null && (
-        <div className={`absolute top-3 z-10 flex items-center gap-1 bg-amber-50 text-amber-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-300 shadow-sm ${discount ? 'right-3' : 'left-3'}`}>
-          <Crown className="w-3 h-3 text-amber-600 fill-amber-500" />
+        <div className={`absolute top-3 z-10 flex items-center gap-1 bg-amber-50 text-fheria-mustard-dark text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-fheria-mustard/50 shadow-sm ${discount ? 'right-3' : 'left-3'}`}>
+          <Crown className="w-3 h-3 text-fheria-mustard fill-fheria-mustard" />
           <span>Prime: {formatCurrency(product.primePriceUsd, currency, exchangeRate)}</span>
         </div>
       )}
 
       {isOutOfStock && !discount && (
-        <span className="absolute top-3 right-3 z-10 bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-md border border-red-200">
+        <span className="absolute top-3 right-3 z-10 bg-red-100 text-fheria-red text-[10px] font-bold px-2 py-0.5 rounded-md border border-red-200">
           Agotado
         </span>
       )}
 
-      <div className="w-full h-40 mb-3 overflow-hidden rounded-xl bg-slate-50 flex items-center justify-center p-2">
+      <div className="w-full h-40 mb-3 overflow-hidden rounded-xl bg-fheria-cream/50 flex items-center justify-center p-2">
         <img
           src={product.image || 'https://via.placeholder.com/300'}
           alt={product.name || 'Producto'}
@@ -72,10 +71,10 @@ export const ProductCard = ({ product }) => {
 
       <div className="flex flex-col flex-1 justify-between space-y-3">
         <div>
-          <span className="text-[10px] font-extrabold text-emerald-700 uppercase tracking-wider block mb-1">
+          <span className="text-[10px] font-extrabold text-fheria-dark uppercase tracking-wider block mb-1">
             {product.category || 'General'}
           </span>
-          <h3 className="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-emerald-800 transition-colors">
+          <h3 className="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-fheria-primary transition-colors">
             {product.name || 'Sin título'}
           </h3>
           <p className="text-[10px] text-gray-400 font-medium mt-1">
@@ -85,13 +84,12 @@ export const ProductCard = ({ product }) => {
 
         <div className="pt-2 border-t border-gray-100 flex items-end justify-between gap-2">
           <div>
-            {/* Precio Original Tachado si está en oferta */}
             {product.originalPriceUsd && (
               <span className="text-[11px] text-gray-400 line-through font-semibold block leading-none">
                 {formatCurrency(product.originalPriceUsd, currency, exchangeRate)}
               </span>
             )}
-            <span className={`text-base font-black block leading-tight ${product.originalPriceUsd ? 'text-red-600' : 'text-gray-900'}`}>
+            <span className={`text-base font-black block leading-tight ${product.originalPriceUsd ? 'text-fheria-red' : 'text-gray-900'}`}>
               {formatCurrency(product.priceUsd || 0, currency, exchangeRate)}
             </span>
           </div>
@@ -104,8 +102,8 @@ export const ProductCard = ({ product }) => {
               isOutOfStock 
                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : added 
-                ? 'bg-emerald-800 text-white' 
-                : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                ? 'bg-fheria-dark text-white' 
+                : 'bg-fheria-primary hover:bg-fheria-dark text-white'
             }`}
           >
             {added ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}

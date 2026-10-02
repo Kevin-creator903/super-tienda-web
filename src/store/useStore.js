@@ -8,11 +8,31 @@ export const useStore = create((set, get) => ({
   selectedProduct: null,
   searchQuery: '',
   
-  // Modales / Drawers
+  isAdminViewOpen: false,
+
+  orders: [
+    {
+      id: 'ORD-1001',
+      date: new Date(Date.now() - 3600000 * 2).toISOString(),
+      customer: {
+        name: 'Carlos Mendoza',
+        phone: '+58 412-1234567',
+        address: 'Valencia, Carabobo - Av. Bolivar Norte',
+        paymentMethod: 'Pago Móvil / Zelle'
+      },
+      items: [
+        { id: 1, name: 'Harina de Maíz Blanco Precocida 1kg', quantity: 3, priceUsd: 1.25 },
+        { id: 3, name: 'Pechuga de Pollo Fresca sin Piel (Por kg)', quantity: 2, priceUsd: 4.80 }
+      ],
+      totalUsd: 13.35,
+      cartTab: 1,
+      status: 'Pendiente'
+    }
+  ],
+
   isCategoryDrawerOpen: false,
   isFilterDrawerOpen: false,
 
-  // Estados de Filtros
   minPriceUSD: 0,
   maxPriceUSD: 150,
   inStockFilter: false,
@@ -20,13 +40,64 @@ export const useStore = create((set, get) => ({
   primeOnlyFilter: false,
   sortBy: 'default',
   
-  // Carritos
   isCartOpen: false,
   activeCartTab: 1,
   isUserLoggedIn: false,
   carts: { 1: [], 2: [], 3: [] },
 
   toast: { show: false, message: '', image: '' },
+
+  toggleAdminView: () => set((state) => ({ isAdminViewOpen: !state.isAdminViewOpen, selectedProduct: null })),
+  openAdminView: () => set({ isAdminViewOpen: true, selectedProduct: null }),
+  closeAdminView: () => set({ isAdminViewOpen: false }),
+
+  createOrder: (customerData = {}) => {
+    const state = get();
+    const activeTab = state.activeCartTab || 1;
+    const currentCart = state.carts[activeTab] || [];
+    if (currentCart.length === 0) return null;
+
+    const totalUsd = currentCart.reduce((sum, item) => sum + ((item?.priceUsd || 0) * (item?.quantity || 1)), 0);
+    const newOrderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const newOrder = {
+      id: newOrderId,
+      date: new Date().toISOString(),
+      customer: {
+        name: customerData.name || 'Cliente Web',
+        phone: customerData.phone || '+58 4XX-XXXXXXX',
+        address: customerData.address || 'Carabobo, Venezuela',
+        paymentMethod: customerData.paymentMethod || 'Acordar por WhatsApp'
+      },
+      items: [...currentCart],
+      totalUsd,
+      cartTab: activeTab,
+      status: 'Pendiente'
+    };
+
+    set((s) => ({
+      orders: [newOrder, ...s.orders],
+      carts: { ...s.carts, [activeTab]: [] },
+      toast: { show: true, message: `¡Pedido ${newOrderId} generado con éxito!`, image: '' }
+    }));
+
+    setTimeout(() => set((s) => ({ toast: { ...s.toast, show: false } })), 3500);
+    return newOrder;
+  },
+
+  updateOrderStatus: (orderId, newStatus) => {
+    set((state) => ({
+      orders: (state.orders || []).map((ord) => 
+        ord.id === orderId ? { ...ord, status: newStatus } : ord
+      )
+    }));
+  },
+
+  deleteOrder: (orderId) => {
+    set((state) => ({
+      orders: (state.orders || []).filter((ord) => ord.id !== orderId)
+    }));
+  },
 
   setCurrency: (currency) => set({ currency }),
   setExchangeRate: (exchangeRate) => set({ exchangeRate }),
@@ -39,19 +110,20 @@ export const useStore = create((set, get) => ({
       selectedCategory: catName, 
       selectedSubcategory: null, 
       selectedProduct: null,
+      isAdminViewOpen: false,
       isCategoryDrawerOpen: false 
     });
   },
   setSelectedSubcategory: (subcategory) => set({ 
     selectedSubcategory: subcategory, 
     selectedProduct: null,
+    isAdminViewOpen: false,
     isCategoryDrawerOpen: false 
   }),
-  setSelectedProduct: (product) => set({ selectedProduct: product }),
+  setSelectedProduct: (product) => set({ selectedProduct: product, isAdminViewOpen: false }),
   clearSelectedProduct: () => set({ selectedProduct: null }),
   setSearchQuery: (searchQuery) => set({ searchQuery: searchQuery || '' }),
   
-  // Modales Toggles
   toggleCategoryDrawer: () => set((state) => ({ isCategoryDrawerOpen: !state.isCategoryDrawerOpen })),
   openCategoryDrawer: () => set({ isCategoryDrawerOpen: true }),
   closeCategoryDrawer: () => set({ isCategoryDrawerOpen: false }),
@@ -60,7 +132,6 @@ export const useStore = create((set, get) => ({
   openFilterDrawer: () => set({ isFilterDrawerOpen: true }),
   closeFilterDrawer: () => set({ isFilterDrawerOpen: false }),
 
-  // Setters de Filtros
   setMinPriceUSD: (minPriceUSD) => set({ minPriceUSD: Math.max(0, Number(minPriceUSD) || 0) }),
   setMaxPriceUSD: (maxPriceUSD) => set({ maxPriceUSD: Number(maxPriceUSD) || 150 }),
   setInStockFilter: (inStockFilter) => set({ inStockFilter: Boolean(inStockFilter) }),
