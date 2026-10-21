@@ -10,8 +10,8 @@ import { SupermarketGrid } from './components/SupermarketGrid';
 import { CategoryDrawer } from './components/CategoryDrawer';
 import { FilterDrawer } from './components/FilterDrawer';
 import { AdminPanel } from './components/AdminPanel';
+import { AdminLoginModal } from './components/AdminLoginModal';
 
-// Componentes Nuevos: Legales, SEO y Cookies
 import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
 import TerminosCondiciones from './pages/TerminosCondiciones';
@@ -25,8 +25,8 @@ import { MessageCircle, ShoppingBag, RotateCcw } from 'lucide-react';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
-  // Manejo de enrutamiento
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', handlePopState);
@@ -45,8 +45,16 @@ export default function App() {
     sortBy = 'default',
     selectedProduct,
     isAdminViewOpen = false,
+    openAdminView,
     resetFilters
   } = useStore();
+
+  // Abrir modal si navega a /admin
+  useEffect(() => {
+    if (currentPath === '/admin' && !isAdminViewOpen) {
+      setIsAdminModalOpen(true);
+    }
+  }, [currentPath, isAdminViewOpen]);
 
   // Actualizador dinámico de título SEO
   useEffect(() => {
@@ -55,6 +63,7 @@ export default function App() {
     if (currentPath === '/terminos-condiciones') pageTitle = 'Términos y Condiciones | FHERIA MAYOR';
     else if (currentPath === '/politica-privacidad') pageTitle = 'Política de Privacidad | FHERIA MAYOR';
     else if (currentPath === '/politica-reembolsos') pageTitle = 'Política de Reembolsos | FHERIA MAYOR';
+    else if (currentPath === '/admin') pageTitle = 'Acceso Administrativo | FHERIA MAYOR';
     else if (selectedCategory && selectedCategory !== 'Todos los productos') pageTitle = `${selectedCategory} | FHERIA MAYOR`;
 
     document.title = pageTitle;
@@ -90,12 +99,11 @@ export default function App() {
       });
   }, [productList, selectedCategory, selectedSubcategory, searchQuery, minPriceUSD, maxPriceUSD, inStockFilter, outOfStockFilter, primeOnlyFilter, sortBy]);
 
-  // Enrutamiento simple para páginas legales y 404
   const renderContent = () => {
     if (currentPath === '/terminos-condiciones') return <TerminosCondiciones />;
     if (currentPath === '/politica-privacidad') return <PoliticaPrivacidad />;
     if (currentPath === '/politica-reembolsos') return <PoliticaReembolsos />;
-    if (currentPath !== '/' && currentPath !== '') return <NotFound />;
+    if (currentPath !== '/' && currentPath !== '' && currentPath !== '/admin') return <NotFound />;
 
     if (isAdminViewOpen) return <AdminPanel />;
     if (selectedProduct) return <ProductDetailView />;
@@ -163,7 +171,7 @@ export default function App() {
         </main>
       </div>
 
-      <Footer />
+      <Footer onAdminClick={() => setIsAdminModalOpen(true)} />
 
       <a 
         href="https://wa.me/584120000000" 
@@ -176,6 +184,15 @@ export default function App() {
       </a>
 
       <CookieBanner />
+
+      <AdminLoginModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+        onSuccess={() => {
+          setIsAdminModalOpen(false);
+          openAdminView();
+        }}
+      />
     </div>
   );
 }

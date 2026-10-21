@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShieldCheck, MessageCircle, FileText, Lock, RefreshCw, Heart } from 'lucide-react';
+import { ShieldCheck, MessageCircle, FileText, Lock, RefreshCw } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ onAdminClick }) {
   return (
     <footer className="bg-neutral-900 text-neutral-300 border-t border-neutral-800 mt-16 text-xs">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -48,7 +48,7 @@ export default function Footer() {
           <h3 className="font-bold text-white text-sm uppercase tracking-wider">Contacto Directo</h3>
           <p className="text-neutral-400">Atención personalizada y confirmación de pedidos:</p>
           <a
-            href="https://wa.me/"
+            href="https://wa.me/584120000000"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-lg transition-colors"
@@ -70,9 +70,16 @@ export default function Footer() {
 
       </div>
 
-      {/* Copyright */}
-      <div className="border-t border-neutral-800 py-4 text-center text-neutral-500 text-[11px]">
-        <p>© 2026 FHERIA MAYOR. Todos los derechos reservados. Desarrollado bajo estándares profesionales de ciberseguridad y comercio legal[cite: 75].</p>
+      {/* Copyright y Acceso Discreto a Gestión */}
+      <div className="border-t border-neutral-800 py-4 text-center text-neutral-500 text-[11px] flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto px-4 gap-2">
+        <p>© 2026 FHERIA MAYOR. Todos los derechos reservados.</p>
+        <button
+          onClick={onAdminClick}
+          className="text-neutral-600 hover:text-neutral-400 transition-colors flex items-center gap-1 font-medium cursor-pointer"
+          title="Gestión Interna"
+        >
+          <Lock className="w-3 h-3" /> Acceso Interno
+        </button>
       </div>
     </footer>
   );
