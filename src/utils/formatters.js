@@ -1,13 +1,16 @@
-/**
- * Formatea montos en USD o VES de forma 100% segura.
- */
-export const formatCurrency = (amountInUsd = 0, currency = 'USD', rate = 1) => {
-  const validAmount = typeof amountInUsd === 'number' && !isNaN(amountInUsd) ? amountInUsd : 0;
-  const validRate = typeof rate === 'number' && !isNaN(rate) && rate > 0 ? rate : 1;
+export const formatCurrency = (amountUsd, currency = 'USD', exchangeRate = 65.00) => {
+  const num = Number(amountUsd) || 0;
 
-  if (currency === 'VES') {
-    const vesValue = validAmount * validRate;
-    return `${vesValue.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs`;
+  if (currency === 'VES' || currency === 'BS' || currency === 'Bs') {
+    const amountBs = num * (exchangeRate || 1);
+    return `Bs. ${amountBs.toLocaleString('es-VE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
   }
-  return `${validAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} $`;
+
+  return `$${num.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 };

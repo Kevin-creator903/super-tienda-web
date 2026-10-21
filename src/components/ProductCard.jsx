@@ -11,7 +11,8 @@ export function ProductCard({ product }) {
     exchangeRate = 36.5,
     isGuest,
     user,
-    logoutUser
+    logoutUser,
+    primeOnlyFilter
   } = useStore();
 
   const [imgError, setImgError] = useState(false);
@@ -35,6 +36,18 @@ export function ProductCard({ product }) {
   };
 
   const isOutOfStock = product.stock === 0;
+
+  // Determinar si aplica precio Prime/Mayorista o precio estándar
+  const activePrice = (primeOnlyFilter && product.primePriceUsd) 
+    ? product.primePriceUsd 
+    : product.priceUsd;
+
+  // Cálculo dinámico según la moneda seleccionada en el Navbar
+  const isVesSelected = currency === 'VES' || currency === 'BS';
+  const mainPrice = formatCurrency(activePrice, currency, exchangeRate);
+  const secondaryPrice = isVesSelected 
+    ? formatCurrency(activePrice, 'USD', 1)
+    : formatCurrency(activePrice, 'VES', exchangeRate);
 
   return (
     <article 
@@ -89,11 +102,13 @@ export function ProductCard({ product }) {
 
         <div className="pt-2 border-t border-gray-100 flex items-end justify-between">
           <div>
+            {/* Precio Principal según botón seleccionado */}
             <div className="text-sm font-black text-gray-900">
-              {formatCurrency(product.priceUsd, 'USD', 1)}
+              {mainPrice}
             </div>
+            {/* Precio Secundario de referencia */}
             <div className="text-[10px] font-semibold text-gray-400">
-              ~{formatCurrency(product.priceUsd, 'VES', exchangeRate)}
+              ~{secondaryPrice}
             </div>
           </div>
 
