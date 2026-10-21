@@ -7,6 +7,9 @@ import { HinexLogo } from './HinexLogo';
 
 export const Navbar = () => {
   const { 
+    user,
+    openProfileModal,
+    logoutUser,
     searchQuery, setSearchQuery, 
     selectedCategory, setSelectedCategory,
     currency, setCurrency, 
@@ -49,6 +52,14 @@ export const Navbar = () => {
     setSelectedProduct(product);
     setIsSearchOpen(false);
     setSearchQuery('');
+  };
+
+  const handleAccountClick = () => {
+    if (user) {
+      openProfileModal();
+    } else {
+      logoutUser(); // Lleva directamente a la pantalla de Login
+    }
   };
 
   return (
@@ -157,9 +168,14 @@ export const Navbar = () => {
             </button>
           </div>
 
-          <button className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer">
-            <User className="w-5 h-5" />
-            <span>Mi Cuenta</span>
+          {/* Mi Cuenta */}
+          <button 
+            onClick={handleAccountClick}
+            className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer"
+            title={user ? `Ver perfil de ${user.name}` : 'Iniciar Sesión'}
+          >
+            <User className="w-5 h-5 text-amber-400" />
+            <span className="max-w-[100px] truncate">{user ? (user.name || 'Mi Cuenta') : 'Mi Cuenta'}</span>
           </button>
 
           {/* Carrito */}

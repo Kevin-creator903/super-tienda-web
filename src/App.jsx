@@ -12,6 +12,7 @@ import { FilterDrawer } from './components/FilterDrawer';
 import { AdminPanel } from './components/AdminPanel';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { LoginScreen } from './components/LoginScreen';
+import { UserProfileModal } from './components/UserProfileModal';
 
 import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
@@ -52,19 +53,19 @@ export default function App() {
     resetFilters
   } = useStore();
 
-  // Si el usuario no está autenticado ni seleccionó el modo invitado, se muestra la portada de Login
+  // Si no está logueado ni en modo invitado, se muestra LoginScreen
   if (!user && !isGuest) {
     return <LoginScreen />;
   }
 
-  // Abrir modal de administración si la ruta navegada es /admin
+  // Ruta /admin
   useEffect(() => {
     if (currentPath === '/admin' && !isAdminViewOpen) {
       setIsAdminModalOpen(true);
     }
   }, [currentPath, isAdminViewOpen]);
 
-  // Actualización dinámica de título SEO
+  // Actualizador de títulos SEO
   useEffect(() => {
     let pageTitle = 'FHERIA MAYOR | Tu Supermercado Mayorista';
     
@@ -101,7 +102,7 @@ export default function App() {
       })
       .sort((a, b) => {
         if (sortBy === 'price-asc') return (a.priceUsd || 0) - (b.priceUsd || 0);
-        if (sortBy === 'price-desc') return (b.priceUsd || 0) - (a.priceUsd || 0);
+        if (sortBy === 'price-desc') return (a.priceUsd || 0) - (a.priceUsd || 0);
         if (sortBy === 'name-asc') return (a.name || '').localeCompare(b.name || '');
         return 0;
       });
@@ -192,6 +193,8 @@ export default function App() {
       </a>
 
       <CookieBanner />
+
+      <UserProfileModal />
 
       <AdminLoginModal
         isOpen={isAdminModalOpen}

@@ -8,6 +8,7 @@ export const useStore = create(
       user: null,
       isGuest: false,
       isUserLoggedIn: false,
+      isProfileModalOpen: false,
 
       // Configuración de Moneda y Catálogo
       currency: 'USD',
@@ -57,13 +58,21 @@ export const useStore = create(
 
       toast: { show: false, message: '', image: '' },
 
-      // Acciones de Autenticación
+      // Acciones de Perfil y Autenticación
+      openProfileModal: () => set({ isProfileModalOpen: true }),
+      closeProfileModal: () => set({ isProfileModalOpen: false }),
+
       loginUser: (userData) => set({ 
-        user: userData, 
+        user: { phone: '', address: '', ...userData }, 
         isGuest: false, 
         isUserLoggedIn: true,
         toast: { show: true, message: `Bienvenido, ${userData.name || 'Cliente'}`, image: '' }
       }),
+
+      updateUserProfile: (updatedData) => set((state) => ({
+        user: { ...state.user, ...updatedData },
+        toast: { show: true, message: '¡Datos personales actualizados con éxito!', image: '' }
+      })),
 
       setGuestMode: () => set({ 
         user: null, 
@@ -76,7 +85,8 @@ export const useStore = create(
         user: null, 
         isGuest: false, 
         isUserLoggedIn: false,
-        isAdminViewOpen: false 
+        isAdminViewOpen: false,
+        isProfileModalOpen: false
       }),
 
       // Acciones de Administración
@@ -99,8 +109,8 @@ export const useStore = create(
           date: new Date().toISOString(),
           customer: {
             name: customerData.name || state.user?.name || 'Cliente Web',
-            phone: customerData.phone || '+58 4XX-XXXXXXX',
-            address: customerData.address || 'Carabobo, Venezuela',
+            phone: customerData.phone || state.user?.phone || '+58 4XX-XXXXXXX',
+            address: customerData.address || state.user?.address || 'Carabobo, Venezuela',
             paymentMethod: customerData.paymentMethod || 'Acordar por WhatsApp'
           },
           items: [...currentCart],
@@ -196,7 +206,7 @@ export const useStore = create(
         if (!product?.id) return;
         const state = get();
         
-        // Bloqueo de compra si está en modo invitado
+        // Alerta si intenta comprar como invitado
         if (state.isGuest && !state.user) {
           set({
             toast: {
