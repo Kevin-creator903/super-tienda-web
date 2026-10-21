@@ -11,6 +11,7 @@ import { CategoryDrawer } from './components/CategoryDrawer';
 import { FilterDrawer } from './components/FilterDrawer';
 import { AdminPanel } from './components/AdminPanel';
 import { AdminLoginModal } from './components/AdminLoginModal';
+import { LoginScreen } from './components/LoginScreen';
 
 import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
@@ -34,6 +35,8 @@ export default function App() {
   }, []);
 
   const { 
+    user,
+    isGuest,
     selectedCategory = 'Todos los productos', 
     selectedSubcategory, 
     searchQuery = '', 
@@ -49,14 +52,19 @@ export default function App() {
     resetFilters
   } = useStore();
 
-  // Abrir modal si navega a /admin
+  // Si el usuario no está autenticado ni seleccionó el modo invitado, se muestra la portada de Login
+  if (!user && !isGuest) {
+    return <LoginScreen />;
+  }
+
+  // Abrir modal de administración si la ruta navegada es /admin
   useEffect(() => {
     if (currentPath === '/admin' && !isAdminViewOpen) {
       setIsAdminModalOpen(true);
     }
   }, [currentPath, isAdminViewOpen]);
 
-  // Actualizador dinámico de título SEO
+  // Actualización dinámica de título SEO
   useEffect(() => {
     let pageTitle = 'FHERIA MAYOR | Tu Supermercado Mayorista';
     

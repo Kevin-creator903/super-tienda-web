@@ -4,8 +4,14 @@ import { persist } from 'zustand/middleware';
 export const useStore = create(
   persist(
     (set, get) => ({
+      // Autenticación y Perfil
+      user: null,
+      isGuest: false,
+      isUserLoggedIn: false,
+
+      // Configuración de Moneda y Catálogo
       currency: 'USD',
-      exchangeRate: 787.52,
+      exchangeRate: 36.5,
       selectedCategory: 'Todos los productos',
       selectedSubcategory: null,
       selectedProduct: null,
@@ -13,6 +19,7 @@ export const useStore = create(
       
       isAdminViewOpen: false,
 
+      // Pedidos Registrados
       orders: [
         {
           id: 'ORD-1001',
@@ -20,7 +27,7 @@ export const useStore = create(
           customer: {
             name: 'Carlos Mendoza',
             phone: '+58 412-1234567',
-            address: 'Valencia, Carabobo - Av. Bolivar Norte',
+            address: 'Valencia, Carabobo - Av. Bolívar Norte',
             paymentMethod: 'Pago Móvil / Zelle'
           },
           items: [
@@ -33,6 +40,7 @@ export const useStore = create(
         }
       ],
 
+      // Estados de Cajones y Filtros
       isCategoryDrawerOpen: false,
       isFilterDrawerOpen: false,
 
@@ -45,15 +53,38 @@ export const useStore = create(
       
       isCartOpen: false,
       activeCartTab: 1,
-      isUserLoggedIn: false,
       carts: { 1: [], 2: [], 3: [] },
 
       toast: { show: false, message: '', image: '' },
 
+      // Acciones de Autenticación
+      loginUser: (userData) => set({ 
+        user: userData, 
+        isGuest: false, 
+        isUserLoggedIn: true,
+        toast: { show: true, message: `Bienvenido, ${userData.name || 'Cliente'}`, image: '' }
+      }),
+
+      setGuestMode: () => set({ 
+        user: null, 
+        isGuest: true, 
+        isUserLoggedIn: false,
+        toast: { show: true, message: 'Modo invitado activo. Puedes explorar el catálogo.', image: '' }
+      }),
+
+      logoutUser: () => set({ 
+        user: null, 
+        isGuest: false, 
+        isUserLoggedIn: false,
+        isAdminViewOpen: false 
+      }),
+
+      // Acciones de Administración
       toggleAdminView: () => set((state) => ({ isAdminViewOpen: !state.isAdminViewOpen, selectedProduct: null })),
       openAdminView: () => set({ isAdminViewOpen: true, selectedProduct: null }),
       closeAdminView: () => set({ isAdminViewOpen: false }),
 
+      // Creación de Pedidos
       createOrder: (customerData = {}) => {
         const state = get();
         const activeTab = state.activeCartTab || 1;
@@ -67,7 +98,7 @@ export const useStore = create(
           id: newOrderId,
           date: new Date().toISOString(),
           customer: {
-            name: customerData.name || 'Cliente Web',
+            name: customerData.name || state.user?.name || 'Cliente Web',
             phone: customerData.phone || '+58 4XX-XXXXXXX',
             address: customerData.address || 'Carabobo, Venezuela',
             paymentMethod: customerData.paymentMethod || 'Acordar por WhatsApp'
@@ -102,6 +133,7 @@ export const useStore = create(
         }));
       },
 
+      // Ajustes Generales y Filtros
       setCurrency: (currency) => set({ currency }),
       setExchangeRate: (exchangeRate) => set({ exchangeRate }),
       setSelectedCategory: (category) => {
@@ -163,6 +195,20 @@ export const useStore = create(
       addToCart: (product, quantity = 1) => {
         if (!product?.id) return;
         const state = get();
+        
+        // Bloqueo de compra si está en modo invitado
+        if (state.isGuest && !state.user) {
+          set({
+            toast: {
+              show: true,
+              message: 'Atención: Como invitado puedes explorar, pero debes iniciar sesión para comprar.',
+              image: '',
+            }
+          });
+          setTimeout(() => set((s) => ({ toast: { ...s.toast, show: false } })), 4000);
+          return;
+        }
+
         const activeTab = state.activeCartTab || 1;
         const cartsState = state.carts || { 1: [], 2: [], 3: [] };
         const currentCart = cartsState[activeTab] || [];
@@ -181,7 +227,7 @@ export const useStore = create(
           carts: { ...cartsState, [activeTab]: updatedCart },
           toast: {
             show: true,
-            message: `¡${product.name || 'Producto'} agregado!`,
+            message: `¡${product.name || 'Producto'} agregado al carrito!`,
             image: product.image || '',
           },
         });
@@ -216,8 +262,12 @@ export const useStore = create(
       },
     }),
     {
-      name: 'fheria-carrito-storage', // Nombre para localStorage
-      partialize: (state) => ({ carts: state.carts }), // Solo guarda el carrito, no guarda configuraciones de vista abierta
+      name: 'fheria-carrito-storage',
+      partialize: (state) => ({ 
+        carts: state.carts,
+        user: state.user,
+        isGuest: state.isGuest
+      }),
     }
   )
 );
