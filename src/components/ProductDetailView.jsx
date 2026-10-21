@@ -10,11 +10,15 @@ export const ProductDetailView = () => {
   const [quantity, setQuantity] = React.useState(1);
   const [added, setAdded] = React.useState(false);
 
-  // Reiniciar estado y subir scroll suavemente al cambiar de producto
+  // Reiniciar estado, subir scroll y actualizar el título SEO al cambiar de producto
   React.useEffect(() => {
     setQuantity(1);
     setAdded(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (selectedProduct) {
+      document.title = `${selectedProduct.name} | FHERIA MAYOR`;
+    }
   }, [selectedProduct]);
 
   if (!selectedProduct) return null;

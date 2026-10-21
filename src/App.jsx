@@ -26,6 +26,7 @@ import { MessageCircle, ShoppingBag, RotateCcw } from 'lucide-react';
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
+  // Manejo de enrutamiento
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', handlePopState);
@@ -46,6 +47,18 @@ export default function App() {
     isAdminViewOpen = false,
     resetFilters
   } = useStore();
+
+  // Actualizador dinámico de título SEO
+  useEffect(() => {
+    let pageTitle = 'FHERIA MAYOR | Tu Supermercado Mayorista';
+    
+    if (currentPath === '/terminos-condiciones') pageTitle = 'Términos y Condiciones | FHERIA MAYOR';
+    else if (currentPath === '/politica-privacidad') pageTitle = 'Política de Privacidad | FHERIA MAYOR';
+    else if (currentPath === '/politica-reembolsos') pageTitle = 'Política de Reembolsos | FHERIA MAYOR';
+    else if (selectedCategory && selectedCategory !== 'Todos los productos') pageTitle = `${selectedCategory} | FHERIA MAYOR`;
+
+    document.title = pageTitle;
+  }, [currentPath, selectedCategory]);
 
   const productList = Array.isArray(mockData.PRODUCTS) ? mockData.PRODUCTS : [];
   const isDefaultView = selectedCategory === 'Todos los productos' && !selectedSubcategory && !searchQuery;
@@ -153,10 +166,10 @@ export default function App() {
       <Footer />
 
       <a 
-        href="https://wa.me/" 
+        href="https://wa.me/584120000000" 
         target="_blank" 
         rel="noreferrer"
-        className="fixed bottom-6 right-24 z-40 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-2xl hover:shadow-emerald-600/30 active:scale-90 transition-all border-2 border-white flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-2xl hover:shadow-emerald-600/30 active:scale-90 transition-all border-2 border-white flex items-center justify-center"
         title="Atención por WhatsApp"
       >
         <MessageCircle className="w-6 h-6" />
