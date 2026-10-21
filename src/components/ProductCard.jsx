@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Package, Check, Sparkles } from 'lucide-react';
+import { ShoppingCart, Package, Check, Sparkles, Lock } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { formatCurrency } from '../utils/formatters';
 
 export function ProductCard({ product }) {
-  const { addToCart, setSelectedProduct, currency = 'USD', exchangeRate = 36.5 } = useStore();
+  const { 
+    addToCart, 
+    setSelectedProduct, 
+    currency = 'USD', 
+    exchangeRate = 36.5,
+    isGuest,
+    user,
+    logoutUser
+  } = useStore();
+
   const [imgError, setImgError] = useState(false);
   const [added, setAdded] = useState(false);
 
@@ -12,6 +21,14 @@ export function ProductCard({ product }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
+
+    if (isGuest && !user) {
+      if (window.confirm('🔒 Estás navegando como invitado. ¿Deseas ir al Inicio de Sesión para realizar tus compras?')) {
+        logoutUser();
+      }
+      return;
+    }
+
     addToCart(product);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
@@ -25,19 +42,19 @@ export function ProductCard({ product }) {
       className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer relative"
       aria-label={`Producto: ${product.name}`}
     >
-      {/* Badge de Oferta / Mayorista */}
+      {/* Badge Mayorista */}
       {product.primePriceUsd && (
         <span className="absolute top-2.5 left-2.5 z-10 bg-amber-500 text-neutral-950 font-black text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
           <Sparkles className="w-3 h-3" /> Mayorista
         </span>
       )}
 
-      {/* Contenedor de Imagen con Lazy Loading */}
+      {/* Imagen */}
       <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center overflow-hidden p-3">
         {!imgError && product.image ? (
           <img
             src={product.image}
-            alt={`Fotografía de ${product.name}`}
+            alt={product.name}
             loading="lazy"
             decoding="async"
             onError={() => setImgError(true)}
@@ -59,7 +76,7 @@ export function ProductCard({ product }) {
         )}
       </div>
 
-      {/* Contenido e Información de Precios */}
+      {/* Información y Botón */}
       <div className="p-3.5 flex flex-col flex-1 justify-between space-y-3">
         <div>
           <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block mb-1">
@@ -84,16 +101,18 @@ export function ProductCard({ product }) {
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             aria-label={`Añadir ${product.name} al carrito`}
-            className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${
+            className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center cursor-pointer ${
               isOutOfStock
                 ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                : isGuest && !user
+                ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950 shadow-sm'
                 : added
                 ? 'bg-emerald-800 text-white scale-95'
                 : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm hover:shadow-emerald-700/20 active:scale-95'
             }`}
-            title="Añadir al carrito"
+            title={isGuest && !user ? "Iniciar sesión para comprar" : "Añadir al carrito"}
           >
-            {added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+            {isGuest && !user ? <Lock className="w-4 h-4" /> : added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
           </button>
         </div>
       </div>

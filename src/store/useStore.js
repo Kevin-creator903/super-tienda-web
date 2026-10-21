@@ -10,6 +10,9 @@ export const useStore = create(
       isUserLoggedIn: false,
       isProfileModalOpen: false,
 
+      // Registro de Auditoría Legal de Aceptación (Guía de Lanzamiento Punto 26)
+      legalConsents: [],
+
       // Configuración de Moneda y Catálogo
       currency: 'USD',
       exchangeRate: 36.5,
@@ -41,7 +44,7 @@ export const useStore = create(
         }
       ],
 
-      // Estados de Cajones y Filtros
+      // Estados de Menús Laterales
       isCategoryDrawerOpen: false,
       isFilterDrawerOpen: false,
 
@@ -58,6 +61,15 @@ export const useStore = create(
 
       toast: { show: false, message: '', image: '' },
 
+      // Controles de Menús Laterales (Apertura y Cierre)
+      toggleCategoryDrawer: () => set((state) => ({ isCategoryDrawerOpen: !state.isCategoryDrawerOpen })),
+      openCategoryDrawer: () => set({ isCategoryDrawerOpen: true }),
+      closeCategoryDrawer: () => set({ isCategoryDrawerOpen: false }),
+
+      toggleFilterDrawer: () => set((state) => ({ isFilterDrawerOpen: !state.isFilterDrawerOpen })),
+      openFilterDrawer: () => set({ isFilterDrawerOpen: true }),
+      closeFilterDrawer: () => set({ isFilterDrawerOpen: false }),
+
       // Acciones de Perfil y Autenticación
       openProfileModal: () => set({ isProfileModalOpen: true }),
       closeProfileModal: () => set({ isProfileModalOpen: false }),
@@ -66,12 +78,35 @@ export const useStore = create(
         user: { phone: '', address: '', ...userData }, 
         isGuest: false, 
         isUserLoggedIn: true,
-        toast: { show: true, message: `Bienvenido, ${userData.name || 'Cliente'}`, image: '' }
+        toast: { show: true, message: `Bienvenido de nuevo, ${userData.name || 'Cliente'}`, image: '' }
       }),
+
+      // Registro con Evidencia de Aceptación Legal (Auditoría)
+      registerUser: (userData, consentDetails = {}) => {
+        const timestamp = new Date().toISOString();
+        const consentLog = {
+          id: `CONSENT-${Date.now()}`,
+          userEmail: userData.email,
+          timestamp,
+          termsVersion: '2026-v1.0',
+          privacyVersion: '2026-v1.0',
+          isOver18: consentDetails.isOver18 || true,
+          termsAccepted: consentDetails.termsAccepted || true,
+          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Desconocido',
+        };
+
+        set((state) => ({
+          user: { ...userData, registrationDate: timestamp },
+          isGuest: false,
+          isUserLoggedIn: true,
+          legalConsents: [consentLog, ...(state.legalConsents || [])],
+          toast: { show: true, message: `¡Cuenta registrada con éxito! Bienvenido, ${userData.name}`, image: '' }
+        }));
+      },
 
       updateUserProfile: (updatedData) => set((state) => ({
         user: { ...state.user, ...updatedData },
-        toast: { show: true, message: '¡Datos personales actualizados con éxito!', image: '' }
+        toast: { show: true, message: '¡Datos personales actualizados!', image: '' }
       })),
 
       setGuestMode: () => set({ 
@@ -168,14 +203,6 @@ export const useStore = create(
       setSelectedProduct: (product) => set({ selectedProduct: product, isAdminViewOpen: false }),
       clearSelectedProduct: () => set({ selectedProduct: null }),
       setSearchQuery: (searchQuery) => set({ searchQuery: searchQuery || '' }),
-      
-      toggleCategoryDrawer: () => set((state) => ({ isCategoryDrawerOpen: !state.isCategoryDrawerOpen })),
-      openCategoryDrawer: () => set({ isCategoryDrawerOpen: true }),
-      closeCategoryDrawer: () => set({ isCategoryDrawerOpen: false }),
-
-      toggleFilterDrawer: () => set((state) => ({ isFilterDrawerOpen: !state.isFilterDrawerOpen })),
-      openFilterDrawer: () => set({ isFilterDrawerOpen: true }),
-      closeFilterDrawer: () => set({ isFilterDrawerOpen: false }),
 
       setMinPriceUSD: (minPriceUSD) => set({ minPriceUSD: Math.max(0, Number(minPriceUSD) || 0) }),
       setMaxPriceUSD: (maxPriceUSD) => set({ maxPriceUSD: Number(maxPriceUSD) || 150 }),
@@ -276,7 +303,8 @@ export const useStore = create(
       partialize: (state) => ({ 
         carts: state.carts,
         user: state.user,
-        isGuest: state.isGuest
+        isGuest: state.isGuest,
+        legalConsents: state.legalConsents
       }),
     }
   )
