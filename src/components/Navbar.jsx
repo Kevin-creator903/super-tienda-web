@@ -4,6 +4,7 @@ import { useStore } from '../store/useStore';
 import * as mockData from '../data/mockData';
 import { formatCurrency } from '../utils/formatters';
 import { HinexLogo } from './HinexLogo';
+import { AdminLoginModal } from './AdminLoginModal';
 
 export const Navbar = () => {
   const { 
@@ -23,6 +24,7 @@ export const Navbar = () => {
   } = useStore();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const searchRef = useRef(null);
 
   const currentCart = carts?.[activeCartTab] || [];
@@ -52,194 +54,216 @@ export const Navbar = () => {
     setSearchQuery('');
   };
 
+  const handleAdminClick = () => {
+    if (isAdminViewOpen) {
+      toggleAdminView();
+    } else {
+      setIsLoginModalOpen(true);
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-sky-700 via-emerald-700 to-sky-600 text-white shadow-xl border-b border-amber-400/30">
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:gap-6">
-        
-        {/* Logo */}
-        <div onClick={() => setSelectedCategory('Todos los productos')} className="flex-shrink-0">
-          <HinexLogo className="h-11 md:h-12" />
-        </div>
-
-        {/* Buscador Avanzado */}
-        <div className="flex-1 max-w-2xl relative" ref={searchRef}>
-          <div className="flex items-center bg-white rounded-full shadow-inner overflow-hidden p-1 focus-within:ring-2 focus-within:ring-amber-400">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2 px-3 border-r border-emerald-100 focus:outline-none cursor-pointer hidden sm:block max-w-[140px] truncate"
-            >
-              {categoriesList.map((cat) => (
-                <option key={cat.id || cat.name} value={cat.name}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-
-            <input
-              type="text"
-              placeholder="Buscar víveres, pollo, embutidos..."
-              value={searchQuery || ''}
-              onFocus={() => setIsSearchOpen(true)}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setIsSearchOpen(true);
-              }}
-              className="w-full py-1.5 px-3 text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none text-xs md:text-sm font-medium"
-            />
-
-            {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="p-1 text-gray-400 hover:text-gray-600 mr-1 cursor-pointer">
-                <X className="w-4 h-4" />
-              </button>
-            )}
-
-            <button className="bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black p-2 rounded-full transition-all flex-shrink-0 cursor-pointer shadow-md">
-              <Search className="w-4 h-4 md:w-5 md:h-5 text-emerald-950" />
-            </button>
-          </div>
-
-          {/* Autocompletado */}
-          {isSearchOpen && searchSuggestions.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-emerald-100 overflow-hidden z-50">
-              <div className="p-2 bg-emerald-50 border-b border-emerald-100 flex items-center justify-between text-[11px] font-bold text-emerald-800">
-                <span>SUGERENCIAS DE BÚSQUEDA</span>
-                <span>{searchSuggestions.length} RESULTADOS</span>
-              </div>
-              <div className="divide-y divide-gray-100">
-                {searchSuggestions.map((prod) => (
-                  <div
-                    key={prod.id}
-                    onClick={() => handleSelectSuggestion(prod)}
-                    className="p-3 hover:bg-emerald-50/70 flex items-center gap-3 cursor-pointer transition-colors"
-                  >
-                    <img src={prod.image} alt={prod.name} className="w-10 h-10 object-contain rounded-lg bg-gray-50 p-1 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-bold text-gray-800 truncate">{prod.name}</h4>
-                      <span className="text-[10px] text-sky-600 font-semibold">{prod.category}</span>
-                    </div>
-                    <span className="text-xs font-black text-emerald-800">
-                      {formatCurrency(prod.priceUsd, currency, exchangeRate)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Acciones de usuario y Botón Admin */}
-        <div className="flex items-center gap-3 md:gap-4 text-xs font-semibold">
+    <>
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-sky-700 via-emerald-700 to-sky-600 text-white shadow-xl border-b border-amber-400/30">
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:gap-6">
           
-          {/* Botón Admin Pedidos */}
-          <button 
-            onClick={toggleAdminView}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-extrabold transition-all cursor-pointer border ${
-              isAdminViewOpen
-                ? 'bg-amber-400 text-emerald-950 border-amber-300 shadow-md'
-                : 'bg-emerald-800/80 hover:bg-emerald-700 text-amber-300 border-emerald-600/50'
-            }`}
-            title="Panel de Administración de Pedidos"
-          >
-            <PackageCheck className="w-4 h-4" />
-            <span className="hidden sm:inline">Admin Pedidos</span>
-          </button>
+          {/* Logo */}
+          <div onClick={() => setSelectedCategory('Todos los productos')} className="flex-shrink-0 cursor-pointer">
+            <HinexLogo className="h-11 md:h-12" />
+          </div>
 
-          <div className="hidden lg:flex items-center gap-1.5 bg-sky-900/60 px-3 py-1.5 rounded-xl border border-sky-500/40">
-            <MapPin className="w-4 h-4 text-amber-400" />
-            <div className="text-left leading-none">
-              <span className="text-[9px] text-emerald-200 uppercase tracking-wider block">Zona</span>
-              <span className="font-extrabold text-white">Carabobo</span>
+          {/* Buscador Avanzado */}
+          <div className="flex-1 max-w-2xl relative" ref={searchRef}>
+            <div className="flex items-center bg-white rounded-full shadow-inner overflow-hidden p-1 focus-within:ring-2 focus-within:ring-amber-400">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2 px-3 border-r border-emerald-100 focus:outline-none cursor-pointer hidden sm:block max-w-[140px] truncate"
+              >
+                {categoriesList.map((cat) => (
+                  <option key={cat.id || cat.name} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="text"
+                placeholder="Buscar víveres, pollo, embutidos..."
+                value={searchQuery || ''}
+                onFocus={() => setIsSearchOpen(true)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setIsSearchOpen(true);
+                }}
+                className="w-full py-1.5 px-3 text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none text-xs md:text-sm font-medium"
+              />
+
+              {searchQuery && (
+                <button onClick={() => setSearchQuery('')} className="p-1 text-gray-400 hover:text-gray-600 mr-1 cursor-pointer">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+
+              <button className="bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black p-2 rounded-full transition-all flex-shrink-0 cursor-pointer shadow-md">
+                <Search className="w-4 h-4 md:w-5 md:h-5 text-emerald-950" />
+              </button>
+            </div>
+
+            {/* Autocompletado */}
+            {isSearchOpen && searchSuggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-emerald-100 overflow-hidden z-50">
+                <div className="p-2 bg-emerald-50 border-b border-emerald-100 flex items-center justify-between text-[11px] font-bold text-emerald-800">
+                  <span>SUGERENCIAS DE BÚSQUEDA</span>
+                  <span>{searchSuggestions.length} RESULTADOS</span>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {searchSuggestions.map((prod) => (
+                    <div
+                      key={prod.id}
+                      onClick={() => handleSelectSuggestion(prod)}
+                      className="p-3 hover:bg-emerald-50/70 flex items-center gap-3 cursor-pointer transition-colors"
+                    >
+                      <img src={prod.image} alt={prod.name} className="w-10 h-10 object-contain rounded-lg bg-gray-50 p-1 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs font-bold text-gray-800 truncate">{prod.name}</h4>
+                        <span className="text-[10px] text-sky-600 font-semibold">{prod.category}</span>
+                      </div>
+                      <span className="text-xs font-black text-emerald-800">
+                        {formatCurrency(prod.priceUsd, currency, exchangeRate)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Acciones de usuario y Botón Admin */}
+          <div className="flex items-center gap-3 md:gap-4 text-xs font-semibold">
+            
+            {/* Botón Admin Pedidos Protegido */}
+            <button 
+              onClick={handleAdminClick}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-extrabold transition-all cursor-pointer border ${
+                isAdminViewOpen
+                  ? 'bg-amber-400 text-emerald-950 border-amber-300 shadow-md'
+                  : 'bg-emerald-800/80 hover:bg-emerald-700 text-amber-300 border-emerald-600/50'
+              }`}
+              title="Panel de Administración de Pedidos"
+            >
+              <PackageCheck className="w-4 h-4" />
+              <span className="hidden sm:inline">
+                {isAdminViewOpen ? 'Cerrar Admin' : 'Admin Pedidos'}
+              </span>
+            </button>
+
+            <div className="hidden lg:flex items-center gap-1.5 bg-sky-900/60 px-3 py-1.5 rounded-xl border border-sky-500/40">
+              <MapPin className="w-4 h-4 text-amber-400" />
+              <div className="text-left leading-none">
+                <span className="text-[9px] text-emerald-200 uppercase tracking-wider block">Zona</span>
+                <span className="font-extrabold text-white">Carabobo</span>
+              </div>
+            </div>
+
+            {/* Selector Moneda */}
+            <div className="flex items-center bg-sky-900/80 p-0.5 rounded-lg border border-sky-500/40">
+              <button
+                onClick={() => setCurrency('USD')}
+                className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                  currency === 'USD' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
+                }`}
+              >
+                $ USD
+              </button>
+              <button
+                onClick={() => setCurrency('VES')}
+                className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                  currency === 'VES' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
+                }`}
+              >
+                Bs VES
+              </button>
+            </div>
+
+            <button className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer">
+              <User className="w-5 h-5" />
+              <span>Mi Cuenta</span>
+            </button>
+
+            {/* Carrito */}
+            <button 
+              onClick={openCart}
+              className="relative bg-sky-900 hover:bg-sky-950 p-2.5 rounded-full transition-colors border border-sky-500/50 cursor-pointer shadow-md"
+            >
+              <ShoppingBag className="w-5 h-5 text-amber-400" />
+              {totalCartItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white font-black rounded-full text-[10px] w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                  {totalCartItems}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Menú de Botones Inferior */}
+        <nav className="bg-sky-950/90 border-t border-sky-800/60 text-xs font-semibold py-2 px-4">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={openCategoryDrawer}
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer border border-emerald-400/30"
+              >
+                <Menu className="w-4 h-4 text-amber-400" />
+                <span>Categorías</span>
+              </button>
+
+              <button 
+                onClick={openFilterDrawer}
+                className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
+              >
+                <Filter className="w-4 h-4" />
+                <span>Filtros</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPrimeOnlyFilter(!primeOnlyFilter)}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all cursor-pointer ${
+                  primeOnlyFilter 
+                    ? 'bg-amber-400 text-emerald-950 shadow-md' 
+                    : 'bg-sky-900/80 text-amber-400 hover:bg-sky-900'
+                }`}
+              >
+                <Crown className="w-3 h-3 fill-amber-400 text-emerald-950" />
+                <span>Solo Prime</span>
+              </button>
+
+              <button
+                onClick={() => setInStockFilter(!inStockFilter)}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                  inStockFilter 
+                    ? 'bg-emerald-500 text-white shadow-md' 
+                    : 'bg-sky-900/80 text-emerald-200 hover:bg-sky-900'
+                }`}
+              >
+                <span>En Stock</span>
+              </button>
             </div>
           </div>
+        </nav>
+      </header>
 
-          {/* Selector Moneda */}
-          <div className="flex items-center bg-sky-900/80 p-0.5 rounded-lg border border-sky-500/40">
-            <button
-              onClick={() => setCurrency('USD')}
-              className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
-                currency === 'USD' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
-              }`}
-            >
-              $ USD
-            </button>
-            <button
-              onClick={() => setCurrency('VES')}
-              className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
-                currency === 'VES' ? 'bg-amber-400 text-emerald-950 shadow-sm' : 'text-emerald-100 hover:text-white'
-              }`}
-            >
-              Bs VES
-            </button>
-          </div>
-
-          <button className="hidden sm:flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer">
-            <User className="w-5 h-5" />
-            <span>Mi Cuenta</span>
-          </button>
-
-          {/* Carrito */}
-          <button 
-            onClick={openCart}
-            className="relative bg-sky-900 hover:bg-sky-950 p-2.5 rounded-full transition-colors border border-sky-500/50 cursor-pointer shadow-md"
-          >
-            <ShoppingBag className="w-5 h-5 text-amber-400" />
-            {totalCartItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white font-black rounded-full text-[10px] w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
-                {totalCartItems}
-              </span>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Menú de Botones */}
-      <nav className="bg-sky-950/90 border-t border-sky-800/60 text-xs font-semibold py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={openCategoryDrawer}
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer border border-emerald-400/30"
-            >
-              <Menu className="w-4 h-4 text-amber-400" />
-              <span>Categorías</span>
-            </button>
-
-            <button 
-              onClick={openFilterDrawer}
-              className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-emerald-950 font-black px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
-            >
-              <Filter className="w-4 h-4" />
-              <span>Filtros</span>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setPrimeOnlyFilter(!primeOnlyFilter)}
-              className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all cursor-pointer ${
-                primeOnlyFilter 
-                  ? 'bg-amber-400 text-emerald-950 shadow-md' 
-                  : 'bg-sky-900/80 text-amber-400 hover:bg-sky-900'
-              }`}
-            >
-              <Crown className="w-3 h-3 fill-amber-400 text-emerald-950" />
-              <span>Solo Prime</span>
-            </button>
-
-            <button
-              onClick={() => setInStockFilter(!inStockFilter)}
-              className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
-                inStockFilter 
-                  ? 'bg-emerald-500 text-white shadow-md' 
-                  : 'bg-sky-900/80 text-emerald-200 hover:bg-sky-900'
-              }`}
-            >
-              <span>En Stock</span>
-            </button>
-          </div>
-        </div>
-      </nav>
-    </header>
+      {/* Modal de Autenticación de Admin */}
+      <AdminLoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onSuccess={() => {
+          setIsLoginModalOpen(false);
+          toggleAdminView();
+        }}
+      />
+    </>
   );
 };

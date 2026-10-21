@@ -1,0 +1,8 @@
+# Control de rastreo para FHERIA MAYOR
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# Enlace oficial al mapa del sitio
+Sitemap: https://fheriamayor.com/sitemap.xml

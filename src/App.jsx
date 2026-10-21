@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
 import { CustomerSupportChat } from './components/CustomerSupportChat';
@@ -11,11 +11,28 @@ import { SupermarketGrid } from './components/SupermarketGrid';
 import { CategoryDrawer } from './components/CategoryDrawer';
 import { FilterDrawer } from './components/FilterDrawer';
 import { AdminPanel } from './components/AdminPanel';
+
+// Componentes Nuevos: Legales, SEO y Cookies
+import CookieBanner from './components/CookieBanner';
+import Footer from './components/Footer';
+import TerminosCondiciones from './pages/TerminosCondiciones';
+import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
+import PoliticaReembolsos from './pages/PoliticaReembolsos';
+import NotFound from './pages/NotFound';
+
 import { useStore } from './store/useStore';
 import * as mockData from './data/mockData';
 import { MessageCircle, ShoppingBag, RotateCcw } from 'lucide-react';
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const { 
     selectedCategory = 'Todos los productos', 
     selectedSubcategory, 
@@ -61,68 +78,80 @@ export default function App() {
       });
   }, [productList, selectedCategory, selectedSubcategory, searchQuery, minPriceUSD, maxPriceUSD, inStockFilter, outOfStockFilter, primeOnlyFilter, sortBy]);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50/40 via-slate-50 to-teal-50/30 text-gray-900 font-sans relative">
-      <Navbar />
+  // Enrutamiento simple para páginas legales y 404
+  const renderContent = () => {
+    if (currentPath === '/terminos-condiciones') return <TerminosCondiciones />;
+    if (currentPath === '/politica-privacidad') return <PoliticaPrivacidad />;
+    if (currentPath === '/politica-reembolsos') return <PoliticaReembolsos />;
+    if (currentPath !== '/' && currentPath !== '') return <NotFound />;
 
-      <ToastNotification />
-      <CartDrawer />
-      <CategoryDrawer />
-      <FilterDrawer />
+    if (isAdminViewOpen) return <AdminPanel />;
+    if (selectedProduct) return <ProductDetailView />;
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        {isAdminViewOpen ? (
-          <AdminPanel />
-        ) : selectedProduct ? (
-          <ProductDetailView />
-        ) : (
-          <>
-            {isDefaultView && <PromoBannerSlider />}
-            {isDefaultView && <OffersSection />}
-            {isDefaultView && <SupermarketGrid />}
+    return (
+      <>
+        {isDefaultView && <PromoBannerSlider />}
+        {isDefaultView && <OffersSection />}
+        {isDefaultView && <SupermarketGrid />}
 
-            <div id="catalog-section" className="w-full space-y-6 pt-2">
-              <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <nav className="text-xs text-emerald-700 font-semibold mb-0.5">
-                    Inicio &gt; {selectedCategory} {selectedSubcategory && `> ${selectedSubcategory}`}
-                  </nav>
-                  <h2 className="text-xl font-black text-gray-900">
-                    {selectedSubcategory || selectedCategory}
-                  </h2>
-                </div>
-                <span className="text-xs font-bold text-gray-500 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full w-max">
-                  {filteredProducts.length} Productos encontrados
-                </span>
-              </div>
-
-              {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                  {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-16 bg-white/90 backdrop-blur-md rounded-2xl border border-dashed border-emerald-200 p-8 shadow-sm space-y-3">
-                  <div className="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto">
-                    <ShoppingBag className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-bold text-gray-800">No hay productos que coincidan</h3>
-                  <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                    Intenta ajustar los filtros o limpiar la búsqueda activa.
-                  </p>
-                  <button
-                    onClick={resetFilters}
-                    className="mt-2 inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" /> Restablecer Filtros
-                  </button>
-                </div>
-              )}
+        <div id="catalog-section" className="w-full space-y-6 pt-2">
+          <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <nav className="text-xs text-emerald-700 font-semibold mb-0.5">
+                Inicio &gt; {selectedCategory} {selectedSubcategory && `> ${selectedSubcategory}`}
+              </nav>
+              <h2 className="text-xl font-black text-gray-900">
+                {selectedSubcategory || selectedCategory}
+              </h2>
             </div>
-          </>
-        )}
-      </main>
+            <span className="text-xs font-bold text-gray-500 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full w-max">
+              {filteredProducts.length} Productos encontrados
+            </span>
+          </div>
+
+          {filteredProducts.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-white/90 backdrop-blur-md rounded-2xl border border-dashed border-emerald-200 p-8 shadow-sm space-y-3">
+              <div className="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto">
+                <ShoppingBag className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-gray-800">No hay productos que coincidan</h3>
+              <p className="text-xs text-gray-500 max-w-sm mx-auto">
+                Intenta ajustar los filtros o limpiar la búsqueda activa.
+              </p>
+              <button
+                onClick={resetFilters}
+                className="mt-2 inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" /> Restablecer Filtros
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50/40 via-slate-50 to-teal-50/30 text-gray-900 font-sans relative flex flex-col justify-between">
+      <div>
+        <Navbar />
+        <ToastNotification />
+        <CartDrawer />
+        <CategoryDrawer />
+        <FilterDrawer />
+
+        <main className="max-w-7xl mx-auto px-4 py-6">
+          {renderContent()}
+        </main>
+      </div>
+
+      <Footer />
 
       <a 
         href="https://wa.me/" 
@@ -135,6 +164,7 @@ export default function App() {
       </a>
 
       <CustomerSupportChat />
+      <CookieBanner />
     </div>
   );
 }

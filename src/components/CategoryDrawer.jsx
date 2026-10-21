@@ -1,110 +1,97 @@
-import React, { useState } from 'react';
-import { X, Folder, ChevronRight, ChevronDown, Search } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X, Layers, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import * as mockData from '../data/mockData';
 
-export const CategoryDrawer = () => {
-  const { isCategoryDrawerOpen, closeCategoryDrawer, setSelectedCategory, setSelectedSubcategory } = useStore();
-  const [filterQuery, setFilterQuery] = useState('');
-  const [expandedCat, setExpandedCat] = useState(null);
+export function CategoryDrawer() {
+  const { isCategoryDrawerOpen, setIsCategoryDrawerOpen, setSelectedCategory, setSelectedSubcategory } = useStore();
+
+  // Escuchar la tecla Escape para cerrar el drawer
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isCategoryDrawerOpen) {
+        setIsCategoryDrawerOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCategoryDrawerOpen, setIsCategoryDrawerOpen]);
 
   if (!isCategoryDrawerOpen) return null;
 
-  const categoriesTree = Array.isArray(mockData.CATEGORY_TREE) ? mockData.CATEGORY_TREE : [];
+  const categories = mockData.CATEGORIES || [];
 
-  const filteredTree = categoriesTree.filter((cat) => {
-    if (!filterQuery) return true;
-    const q = filterQuery.toLowerCase();
-    const matchCat = cat.name.toLowerCase().includes(q);
-    const matchSub = cat.subcategories?.some((s) => s.name.toLowerCase().includes(q));
-    return matchCat || matchSub;
-  });
+  const handleSelect = (catName, subcatName = null) => {
+    setSelectedCategory(catName);
+    setSelectedSubcategory(subcatName);
+    setIsCategoryDrawerOpen(false);
+  };
 
   return (
-    <div className="fixed inset-0 z-[9999] overflow-hidden animate-fade-in">
-      <div onClick={closeCategoryDrawer} className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
+    <div 
+      className="fixed inset-0 z-50 flex justify-start bg-black/60 backdrop-blur-sm transition-opacity"
+      onClick={() => setIsCategoryDrawerOpen(false)}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menú de Categorías"
+    >
+      <div 
+        className="w-full max-w-xs sm:max-w-sm bg-white h-full shadow-2xl flex flex-col p-6 overflow-y-auto animate-in slide-in-from-left duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Encabezado */}
+        <div className="flex items-center justify-between border-b pb-4 mb-4">
+          <div className="flex items-center gap-2 text-emerald-800 font-extrabold text-base">
+            <Layers className="w-5 h-5" />
+            <h2>Categorías de Productos</h2>
+          </div>
+          <button 
+            onClick={() => setIsCategoryDrawerOpen(false)}
+            className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+            aria-label="Cerrar menú de categorías"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-      <div className="fixed inset-y-0 left-0 max-w-full flex">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
-          
-          {/* Header */}
-          <div className="bg-emerald-800 text-white p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Folder className="w-6 h-6 text-amber-300" />
-                <h2 className="text-lg font-black">Todas las Categorías</h2>
-              </div>
-              <button onClick={closeCategoryDrawer} className="p-1 text-emerald-200 hover:text-white rounded-full">
-                <X className="w-5 h-5" />
+        {/* Lista de Categorías */}
+        <div className="space-y-1 overflow-y-auto flex-1 pr-1">
+          <button
+            onClick={() => handleSelect('Todos los productos')}
+            className="w-full text-left font-bold text-xs p-3 rounded-xl hover:bg-emerald-50 text-gray-800 flex items-center justify-between transition-colors"
+          >
+            <span>Todas las Categorías</span>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+          </button>
+
+          {categories.map((cat) => (
+            <div key={cat.id} className="space-y-0.5">
+              <button
+                onClick={() => handleSelect(cat.name)}
+                className="w-full text-left font-bold text-xs p-3 rounded-xl hover:bg-emerald-50 text-gray-800 flex items-center justify-between transition-colors"
+              >
+                <span>{cat.name}</span>
+                <ChevronRight className="w-4 h-4 text-emerald-600" />
               </button>
-            </div>
 
-            {/* Buscador dentro de categorías */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Buscar categoría..."
-                value={filterQuery}
-                onChange={(e) => setFilterQuery(e.target.value)}
-                className="w-full bg-emerald-950/60 text-white placeholder-emerald-300/70 text-xs rounded-xl py-2 pl-8 pr-3 focus:outline-none border border-emerald-600/40"
-              />
-              <Search className="w-3.5 h-3.5 text-emerald-300 absolute left-2.5 top-1/2 -translate-y-1/2" />
-            </div>
-          </div>
-
-          {/* Lista de Categorías */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-slate-50">
-            {filteredTree.map((cat) => {
-              const isExpanded = expandedCat === cat.id;
-              const hasSubs = Array.isArray(cat.subcategories) && cat.subcategories.length > 0;
-
-              return (
-                <div key={cat.id} className="bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden">
-                  <div className="flex items-center justify-between p-3.5 hover:bg-emerald-50/50 transition-colors">
+              {/* Subcategorías */}
+              {cat.subcategories && cat.subcategories.length > 0 && (
+                <div className="pl-4 space-y-0.5 border-l-2 border-emerald-100 my-1">
+                  {cat.subcategories.map((sub, idx) => (
                     <button
-                      onClick={() => {
-                        setSelectedCategory(cat.name);
-                        closeCategoryDrawer();
-                      }}
-                      className="text-xs font-black text-gray-800 text-left flex-1 hover:text-emerald-700"
+                      key={idx}
+                      onClick={() => handleSelect(cat.name, sub)}
+                      className="w-full text-left text-xs p-2 rounded-lg text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/50 block transition-colors"
                     >
-                      {cat.name}
+                      {sub}
                     </button>
-
-                    {hasSubs && (
-                      <button
-                        onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
-                        className="p-1 text-gray-400 hover:text-emerald-700"
-                      >
-                        {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-                      </button>
-                    )}
-                  </div>
-
-                  {isExpanded && hasSubs && (
-                    <div className="bg-slate-50/80 p-3 pt-1 border-t border-gray-100 space-y-1">
-                      {cat.subcategories.map((sub) => (
-                        <button
-                          key={sub.id}
-                          onClick={() => {
-                            setSelectedCategory(cat.name);
-                            setSelectedSubcategory(sub.name);
-                            closeCategoryDrawer();
-                          }}
-                          className="block w-full text-left py-1.5 px-3 rounded-lg text-[11px] font-semibold text-gray-600 hover:text-emerald-800 hover:bg-emerald-100/60 transition-colors"
-                        >
-                          • {sub.name}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
-};
+}

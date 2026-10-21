@@ -1,116 +1,102 @@
-import React from 'react';
-import { Plus, Crown, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShoppingCart, Eye, Package, Check, Sparkles } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { formatCurrency } from '../utils/formatters';
+import { formatCurrencyUSD, formatCurrencyVES } from '../utils/formatters';
 
-export const ProductCard = ({ product }) => {
-  const { currency, exchangeRate, addToCart, setSelectedProduct } = useStore();
-  const [added, setAdded] = React.useState(false);
+export function ProductCard({ product }) {
+  const { addToCart, setSelectedProduct } = useStore();
+  const [imgError, setImgError] = useState(false);
+  const [added, setAdded] = useState(false);
 
   if (!product) return null;
 
-  const handleClickCard = () => {
-    if (typeof setSelectedProduct === 'function') {
-      setSelectedProduct(product);
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  };
-
-  const handleAdd = (e) => {
+  const handleAddToCart = (e) => {
     e.stopPropagation();
-    if (typeof addToCart === 'function') {
-      addToCart(product, 1);
-      setAdded(true);
-      setTimeout(() => setAdded(false), 1200);
-    }
+    addToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1200);
   };
 
-  const isOutOfStock = (product.stock || 0) === 0;
-
-  const discount = product.discountPercentage || 
-    (product.originalPriceUsd && product.originalPriceUsd > product.priceUsd 
-      ? Math.round(((product.originalPriceUsd - product.priceUsd) / product.originalPriceUsd) * 100)
-      : null);
+  const isOutOfStock = product.stock === 0;
 
   return (
-    <div 
-      onClick={handleClickCard}
-      className={`bg-white rounded-2xl border border-fheria-cream-dark shadow-sm hover:shadow-xl hover:border-fheria-light transition-all duration-300 flex flex-col justify-between p-4 group relative cursor-pointer ${
-        isOutOfStock ? 'opacity-70' : ''
-      }`}
+    <article 
+      onClick={() => setSelectedProduct(product)}
+      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer relative"
+      aria-label={`Producto: ${product.name}`}
     >
-      {/* Badge Descuento (Rojo Manzana) */}
-      {discount && (
-        <div className="absolute top-3 left-3 z-20 bg-fheria-red text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
-          -{discount}%
-        </div>
-      )}
-
-      {/* Badge Prime (Mostaza) */}
-      {product.primePriceUsd !== undefined && product.primePriceUsd !== null && (
-        <div className={`absolute top-3 z-10 flex items-center gap-1 bg-amber-50 text-fheria-mustard-dark text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-fheria-mustard/50 shadow-sm ${discount ? 'right-3' : 'left-3'}`}>
-          <Crown className="w-3 h-3 text-fheria-mustard fill-fheria-mustard" />
-          <span>Prime: {formatCurrency(product.primePriceUsd, currency, exchangeRate)}</span>
-        </div>
-      )}
-
-      {isOutOfStock && !discount && (
-        <span className="absolute top-3 right-3 z-10 bg-red-100 text-fheria-red text-[10px] font-bold px-2 py-0.5 rounded-md border border-red-200">
-          Agotado
+      {/* Badge de Oferta / Mayorista */}
+      {product.primePriceUsd && (
+        <span className="absolute top-2.5 left-2.5 z-10 bg-amber-500 text-neutral-950 font-black text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+          <Sparkles className="w-3 h-3" /> Mayorista
         </span>
       )}
 
-      <div className="w-full h-40 mb-3 overflow-hidden rounded-xl bg-fheria-cream/50 flex items-center justify-center p-2">
-        <img
-          src={product.image || 'https://via.placeholder.com/300'}
-          alt={product.name || 'Producto'}
-          className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
-          loading="lazy"
-        />
+      {/* Contenedor de Imagen con Lazy Loading */}
+      <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center overflow-hidden p-3">
+        {!imgError && product.image ? (
+          <img
+            src={product.image}
+            alt={`Fotografía de ${product.name}`}
+            loading="lazy"
+            decoding="async"
+            onError={() => setImgError(true)}
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center text-gray-300 space-y-1">
+            <Package className="w-10 h-10 stroke-1" />
+            <span className="text-[10px] font-medium text-gray-400">Sin Imagen</span>
+          </div>
+        )}
+
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-[1px] flex items-center justify-center z-10">
+            <span className="bg-gray-800 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+              Agotado
+            </span>
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col flex-1 justify-between space-y-3">
+      {/* Contenido e Información de Precios */}
+      <div className="p-3.5 flex flex-col flex-1 justify-between space-y-3">
         <div>
-          <span className="text-[10px] font-extrabold text-fheria-dark uppercase tracking-wider block mb-1">
-            {product.category || 'General'}
+          <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block mb-1">
+            {product.category}
           </span>
-          <h3 className="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-fheria-primary transition-colors">
-            {product.name || 'Sin título'}
+          <h3 className="text-xs font-bold text-gray-900 line-clamp-2 group-hover:text-emerald-700 transition-colors">
+            {product.name}
           </h3>
-          <p className="text-[10px] text-gray-400 font-medium mt-1">
-            ({product.stock || 0} Disponibles)
-          </p>
         </div>
 
-        <div className="pt-2 border-t border-gray-100 flex items-end justify-between gap-2">
+        <div className="pt-2 border-t border-gray-100 flex items-end justify-between">
           <div>
-            {product.originalPriceUsd && (
-              <span className="text-[11px] text-gray-400 line-through font-semibold block leading-none">
-                {formatCurrency(product.originalPriceUsd, currency, exchangeRate)}
-              </span>
-            )}
-            <span className={`text-base font-black block leading-tight ${product.originalPriceUsd ? 'text-fheria-red' : 'text-gray-900'}`}>
-              {formatCurrency(product.priceUsd || 0, currency, exchangeRate)}
-            </span>
+            <div className="text-sm font-black text-gray-900">
+              {formatCurrencyUSD(product.priceUsd)}
+            </div>
+            <div className="text-[10px] font-semibold text-gray-400">
+              ~{formatCurrencyVES(product.priceUsd * 36.5)}
+            </div>
           </div>
 
           <button
-            type="button"
-            onClick={handleAdd}
-            disabled={isOutOfStock}
-            className={`flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition-all active:scale-95 cursor-pointer ${
-              isOutOfStock 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : added 
-                ? 'bg-fheria-dark text-white' 
-                : 'bg-fheria-primary hover:bg-fheria-dark text-white'
-            }`}
+         onClick={handleAddToCart}
+         disabled={isOutOfStock}
+         aria-label={`Añadir ${product.name} al carrito`}
+            className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${
+            isOutOfStock
+          ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+          : added
+          ? 'bg-emerald-800 text-white scale-95'
+          : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm hover:shadow-emerald-700/20 active:scale-95'
+          }`}
+          title="Añadir al carrito"
           >
-            {added ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            <span>{added ? 'Listo' : 'Agregar'}</span>
-          </button>
+  {added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+</button>
         </div>
       </div>
-    </div>
+    </article>
   );
-};
+}
