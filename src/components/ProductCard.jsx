@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Eye, Package, Check, Sparkles } from 'lucide-react';
+import { ShoppingCart, Package, Check, Sparkles } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { formatCurrencyUSD, formatCurrencyVES } from '../utils/formatters';
+import { formatCurrency } from '../utils/formatters';
 
 export function ProductCard({ product }) {
-  const { addToCart, setSelectedProduct } = useStore();
+  const { addToCart, setSelectedProduct, currency = 'USD', exchangeRate = 36.5 } = useStore();
   const [imgError, setImgError] = useState(false);
   const [added, setAdded] = useState(false);
 
@@ -73,28 +73,28 @@ export function ProductCard({ product }) {
         <div className="pt-2 border-t border-gray-100 flex items-end justify-between">
           <div>
             <div className="text-sm font-black text-gray-900">
-              {formatCurrencyUSD(product.priceUsd)}
+              {formatCurrency(product.priceUsd, 'USD', 1)}
             </div>
             <div className="text-[10px] font-semibold text-gray-400">
-              ~{formatCurrencyVES(product.priceUsd * 36.5)}
+              ~{formatCurrency(product.priceUsd, 'VES', exchangeRate)}
             </div>
           </div>
 
           <button
-         onClick={handleAddToCart}
-         disabled={isOutOfStock}
-         aria-label={`Añadir ${product.name} al carrito`}
+            onClick={handleAddToCart}
+            disabled={isOutOfStock}
+            aria-label={`Añadir ${product.name} al carrito`}
             className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${
-            isOutOfStock
-          ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
-          : added
-          ? 'bg-emerald-800 text-white scale-95'
-          : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm hover:shadow-emerald-700/20 active:scale-95'
-          }`}
-          title="Añadir al carrito"
+              isOutOfStock
+                ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                : added
+                ? 'bg-emerald-800 text-white scale-95'
+                : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm hover:shadow-emerald-700/20 active:scale-95'
+            }`}
+            title="Añadir al carrito"
           >
-  {added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
-</button>
+            {added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+          </button>
         </div>
       </div>
     </article>

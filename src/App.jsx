@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
-import { CartDrawer } from './components/CartDrawer';
+import CartDrawer from './components/CartDrawer';
 import { ToastNotification } from './components/ToastNotification';
 import { ProductDetailView } from './components/ProductDetailView';
 import { PromoBannerSlider } from './components/PromoBannerSlider';
