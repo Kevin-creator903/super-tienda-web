@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
-import { CustomerSupportChat } from './components/CustomerSupportChat';
 import { CartDrawer } from './components/CartDrawer';
 import { ToastNotification } from './components/ToastNotification';
 import { ProductDetailView } from './components/ProductDetailView';
@@ -163,7 +162,6 @@ export default function App() {
         <MessageCircle className="w-6 h-6" />
       </a>
 
-      <CustomerSupportChat />
       <CookieBanner />
     </div>
   );
