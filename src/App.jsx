@@ -53,11 +53,6 @@ export default function App() {
     resetFilters
   } = useStore();
 
-  // Si no está logueado ni en modo invitado, se muestra LoginScreen
-  if (!user && !isGuest) {
-    return <LoginScreen />;
-  }
-
   // Ruta /admin
   useEffect(() => {
     if (currentPath === '/admin' && !isAdminViewOpen) {
@@ -65,7 +60,7 @@ export default function App() {
     }
   }, [currentPath, isAdminViewOpen]);
 
-  // Actualizador de títulos SEO
+  // Actualizador dinámico de título SEO
   useEffect(() => {
     let pageTitle = 'FHERIA MAYOR | Tu Supermercado Mayorista';
     
@@ -102,11 +97,16 @@ export default function App() {
       })
       .sort((a, b) => {
         if (sortBy === 'price-asc') return (a.priceUsd || 0) - (b.priceUsd || 0);
-        if (sortBy === 'price-desc') return (a.priceUsd || 0) - (a.priceUsd || 0);
+        if (sortBy === 'price-desc') return (b.priceUsd || 0) - (a.priceUsd || 0);
         if (sortBy === 'name-asc') return (a.name || '').localeCompare(b.name || '');
         return 0;
       });
   }, [productList, selectedCategory, selectedSubcategory, searchQuery, minPriceUSD, maxPriceUSD, inStockFilter, outOfStockFilter, primeOnlyFilter, sortBy]);
+
+  // Evaluación de sesión ubicada después de los hooks para evitar crashes
+  if (!user && !isGuest) {
+    return <LoginScreen />;
+  }
 
   const renderContent = () => {
     if (currentPath === '/terminos-condiciones') return <TerminosCondiciones />;
